@@ -3,19 +3,26 @@ package controller;
 import helper.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.DataProvider;
+import model.InHousePart;
+import model.Part;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainFormController implements Initializable {
-
-    Helper helper = new Helper();
+    @FXML
+    private TextField searchPartsTextField;
+    @FXML
+    private TextField searchProductsTextField;
     @FXML
     private TableView partsTableView;
     @FXML
@@ -34,6 +41,7 @@ public class MainFormController implements Initializable {
     private TableColumn productInventoryColumn;
     @FXML
     private TableColumn productPriceColumn;
+    Helper helper = new Helper();
 
 
     public void onActionAddPart(ActionEvent actionEvent) throws IOException {
@@ -41,10 +49,24 @@ public class MainFormController implements Initializable {
     }
 
     public void onActionModifyPart(ActionEvent actionEvent) throws IOException {
-        helper.navigateToScreen(actionEvent, "/view/ModifyPartForm.fxml");
+        if(partsTableView.getSelectionModel().getSelectedIndex() > -1) {
+            helper.sendDataAndLoadPage(actionEvent, partsTableView, "/view/ModifyPartForm.fxml");
+        } else {
+            helper.createAlert( Alert.AlertType.WARNING,"Part Not Selected", "Select part to modify");
+        }
     }
 
-    public void onActionDeletePart(ActionEvent actionEvent) {
+    public void onActionDeletePart(ActionEvent actionEvent) throws IOException {
+        if(partsTableView.getSelectionModel().getSelectedIndex() > -1) {
+            Part part = (InHousePart) partsTableView.getSelectionModel().getSelectedItem();
+            boolean deletePart = helper.createAlert( Alert.AlertType.CONFIRMATION,"Delete Part Confirmation", "Are you sure you want to delete this part?");
+
+            if(deletePart == true) {
+                DataProvider.deletePart(part.getId());
+            }
+        } else {
+            helper.createAlert( Alert.AlertType.WARNING,"Part Not Selected", "Select part to delete");
+        }
     }
 
     public void onActionAddProduct(ActionEvent actionEvent) throws IOException {
@@ -72,4 +94,10 @@ public class MainFormController implements Initializable {
         partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
+    public void onActionSearchProduct(ActionEvent actionEvent) {
+
+    }
+
+    public void onActionSearchPart(ActionEvent actionEvent) {
+    }
 }

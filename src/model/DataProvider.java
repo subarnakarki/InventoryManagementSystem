@@ -11,6 +11,15 @@ public class DataProvider {
     public static void addPart(Part part) {
         allParts.add(part);
     }
+    public static boolean deletePart(int id) {
+        for(Part part : DataProvider.getAllParts()) {
+            if(part.getId() == id) {
+                return DataProvider.getAllParts().remove(part);
+            }
+        }
+        return false;
+    }
+
     public static  ObservableList<Part> getAllParts() {
         return allParts;
     }
