@@ -3,13 +3,10 @@ package controller;
 import helper.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
+import javafx.scene.input.KeyEvent;
 import model.DataProvider;
 import model.InHousePart;
 import model.Part;
@@ -98,6 +95,8 @@ public class MainFormController implements Initializable {
 
     }
 
-    public void onActionSearchPart(ActionEvent actionEvent) {
+    public void onActionSearchPart(KeyEvent actionEvent) {
+        String searchText = searchPartsTextField.getText();
+        DataProvider.search(searchText, partsTableView);
     }
 }

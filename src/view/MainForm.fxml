@@ -17,7 +17,7 @@
       </Label>
       <AnchorPane layoutX="21.0" layoutY="77.0" prefHeight="256.0" prefWidth="429.0" style="-fx-border-color: black; -fx-border-radius: 15;">
          <children>
-            <TextField fx:id="searchPartsTextField" layoutX="225.0" layoutY="23.0" onAction="#onActionSearchPart" promptText="Search by Part ID or Name" />
+            <TextField fx:id="searchPartsTextField" layoutX="225.0" layoutY="23.0" onKeyTyped="#onActionSearchPart" promptText="Search by Part ID or Name" />
             <Label layoutX="25.0" layoutY="27.0" style="-fx-font-weight: bold;" text="Parts" />
             <TableView fx:id="partsTableView" layoutX="14.0" layoutY="48.0" prefHeight="162.0" prefWidth="402.0">
                <columns>
