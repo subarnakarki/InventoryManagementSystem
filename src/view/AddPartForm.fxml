@@ -16,7 +16,7 @@
             <ToggleGroup fx:id="addPartToggleGroup" />
          </toggleGroup>
       </RadioButton>
-      <RadioButton fx:id="inHouseRBtn" layoutX="138.0" layoutY="17.0" mnemonicParsing="false" onAction="#onActionShowInhouse" text="In-House" toggleGroup="$addPartToggleGroup" />
+      <RadioButton fx:id="inHouseRBtn" layoutX="138.0" layoutY="17.0" mnemonicParsing="false" onAction="#onActionShowInhouse" selected="true" text="In-House" toggleGroup="$addPartToggleGroup" />
         <VBox layoutX="45.0" layoutY="67.0" prefHeight="340.0" prefWidth="360.0">
             <children>
                 <GridPane vgap="10.0">
