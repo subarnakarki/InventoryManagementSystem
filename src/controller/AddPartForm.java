@@ -4,12 +4,15 @@ import helper.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.DataProvider;
 import model.InHousePart;
+import model.OutsourcedPart;
+import model.Part;
 
 import javax.xml.crypto.Data;
 import java.io.IOException;
@@ -45,17 +48,27 @@ public class AddPartForm implements Initializable {
     public TextField minTxt;
 
     @FXML
-    public TextField machineIdTxt;
+    public Label machineIdOrCompanyLabel;
+
+    @FXML
+    public TextField machineIdOrCompanyTxt;
 
     Helper helper = new Helper();
+
     public void onActionSavePart(ActionEvent actionEvent) throws IOException {
+        boolean partIsInhouse = inHouseRBtn.isSelected() ? true : false;
         String name = nameTxt.getText();
         double price = Double.parseDouble(priceCostTxt.getText());
         int stock = Integer.parseInt(stockTxt.getText());
         int min = Integer.parseInt(minTxt.getText());
         int max = Integer.parseInt(maxTxt.getText());
-        int machineId = Integer.parseInt(machineIdTxt.getText());
-        DataProvider.addPart(new InHousePart(DataProvider.generateId(DataProvider.getAllParts()), name, price, stock, min, max, machineId));
+        Part newPart;
+        if (partIsInhouse) {
+            newPart = new InHousePart(DataProvider.generateId(DataProvider.getAllParts()), name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
+        } else {
+            newPart = new OutsourcedPart(DataProvider.generateId(DataProvider.getAllParts()), name , price, stock, min, max,machineIdOrCompanyTxt.getText());
+        }
+        DataProvider.addPart(newPart);
         helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
 
@@ -63,11 +76,14 @@ public class AddPartForm implements Initializable {
         helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
 
-    public void onActionShowInhouse(ActionEvent actionEvent) {
+    public void onActionShowOutsourced(ActionEvent actionEvent) {
+        machineIdOrCompanyLabel.setText("Company Name");
     }
 
-    public void onActionShowOutsourced(ActionEvent actionEvent) {
+    public void onActionShowInhouse(ActionEvent actionEvent) {
+        machineIdOrCompanyLabel.setText("Machine ID");
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

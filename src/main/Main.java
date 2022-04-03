@@ -24,7 +24,8 @@ public class Main extends Application {
         DataProvider.addPart(wheel);
         InHousePart seat = new InHousePart(DataProvider.generateId(DataProvider.getAllParts()), "seat", 12.99, 10, 1, 10, 6511);
         DataProvider.addPart(seat);
-
+        OutsourcedPart door = new OutsourcedPart(DataProvider.generateId(DataProvider.getAllParts()), "door", 45.99, 10, 1, 10, "company one");
+        DataProvider.addPart(door);
         launch(args);
     }
 }

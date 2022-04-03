@@ -76,4 +76,16 @@ public class DataProvider {
             tableView.setItems(getFilteredParts());
         }
     }
+
+    public static boolean modify(int id, Part modifiedPart) {
+        int index = 0;
+        for(Part part : DataProvider.getAllParts()) {
+            if(part.getId() == id) {
+                DataProvider.getAllParts().set(index, modifiedPart);
+                return true;
+            }
+            index++;
+        }
+        return false;
+    }
 }
