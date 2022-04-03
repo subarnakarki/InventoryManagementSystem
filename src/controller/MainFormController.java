@@ -55,11 +55,12 @@ public class MainFormController implements Initializable {
 
     public void onActionDeletePart(ActionEvent actionEvent) throws IOException {
         if(partsTableView.getSelectionModel().getSelectedIndex() > -1) {
-            Part part = (InHousePart) partsTableView.getSelectionModel().getSelectedItem();
-            boolean deletePart = helper.createAlert( Alert.AlertType.CONFIRMATION,"Delete Part Confirmation", "Are you sure you want to delete this part?");
+            Part part = (Part) partsTableView.getSelectionModel().getSelectedItem();
+            boolean deletePart = helper.createAlert( Alert.AlertType.CONFIRMATION,"Delete Part Confirmation", "Are you sure you want to delete the " + part.getName() + "?");
 
             if(deletePart == true) {
                 DataProvider.deletePart(part.getId());
+                System.out.println(part instanceof InHousePart ? "Inhouse part deleted" : "Outsourced Part deleted");
             }
         } else {
             helper.createAlert( Alert.AlertType.WARNING,"Part Not Selected", "Select part to delete");
