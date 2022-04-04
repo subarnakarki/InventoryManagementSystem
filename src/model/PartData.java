@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 
-public class DataProvider {
+public class PartData {
     // type of object for the observable list in the diamond
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
     private static ObservableList<Part> filteredParts = FXCollections.observableArrayList();
@@ -13,9 +13,9 @@ public class DataProvider {
         allParts.add(part);
     }
     public static boolean deletePart(int id) {
-        for(Part part : DataProvider.getAllParts()) {
+        for(Part part : PartData.getAllParts()) {
             if(part.getId() == id) {
-                return DataProvider.getAllParts().remove(part);
+                return PartData.getAllParts().remove(part);
             }
         }
         return false;
@@ -34,35 +34,36 @@ public class DataProvider {
     }
 
     public static ObservableList<Part> filterParts(int id) {
-        if (!(DataProvider.getFilteredParts().isEmpty())) {
+        if (!(PartData.getFilteredParts().isEmpty())) {
             // clear list
-            DataProvider.getFilteredParts().clear();
+            PartData.getFilteredParts().clear();
         }
-        for (Part part : DataProvider.getAllParts()) {
+        for (Part part : PartData.getAllParts()) {
             if(part.getId() == id) {
-                DataProvider.getFilteredParts().add(part);
+                PartData.getFilteredParts().add(part);
             }
         }
-        if (DataProvider.getFilteredParts().isEmpty()) {
-            return DataProvider.getAllParts();
+        if (PartData.getFilteredParts().isEmpty()) {
+            return PartData.getAllParts();
         } else {
-            return DataProvider.getFilteredParts();
+            return PartData.getFilteredParts();
         }
     }
+
     public static ObservableList<Part> filterParts(String searchText) {
-        if (!(DataProvider.getFilteredParts().isEmpty())) {
+        if (!(PartData.getFilteredParts().isEmpty())) {
             // clear list
-            DataProvider.getFilteredParts().clear();
+            PartData.getFilteredParts().clear();
         }
-        for (Part part : DataProvider.getAllParts()) {
+        for (Part part : PartData.getAllParts()) {
             if(part.getName().contains(searchText)) {
-                DataProvider.getFilteredParts().add(part);
+                PartData.getFilteredParts().add(part);
             }
         }
-        if (DataProvider.getFilteredParts().isEmpty()) {
-            return DataProvider.getAllParts();
+        if (PartData.getFilteredParts().isEmpty()) {
+            return PartData.getAllParts();
         } else {
-            return DataProvider.getFilteredParts();
+            return PartData.getFilteredParts();
         }
     }
 
@@ -79,9 +80,9 @@ public class DataProvider {
 
     public static boolean modify(int id, Part modifiedPart) {
         int index = 0;
-        for(Part part : DataProvider.getAllParts()) {
+        for(Part part : PartData.getAllParts()) {
             if(part.getId() == id) {
-                DataProvider.getAllParts().set(index, modifiedPart);
+                PartData.getAllParts().set(index, modifiedPart);
                 return true;
             }
             index++;

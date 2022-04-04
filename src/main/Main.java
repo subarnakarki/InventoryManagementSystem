@@ -18,14 +18,14 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        InHousePart brakes = new InHousePart(DataProvider.generateId(DataProvider.getAllParts()), "brakes", 12.99, 10, 1, 10, 16541);
-        DataProvider.addPart(brakes);
-        InHousePart wheel = new InHousePart(DataProvider.generateId(DataProvider.getAllParts()), "wheel", 12.99, 16, 1, 10, 651);
-        DataProvider.addPart(wheel);
-        InHousePart seat = new InHousePart(DataProvider.generateId(DataProvider.getAllParts()), "seat", 12.99, 10, 1, 10, 6511);
-        DataProvider.addPart(seat);
-        OutsourcedPart door = new OutsourcedPart(DataProvider.generateId(DataProvider.getAllParts()), "door", 45.99, 10, 1, 10, "company one");
-        DataProvider.addPart(door);
+        InHousePart brakes = new InHousePart(PartData.generateId(PartData.getAllParts()), "brakes", 12.99, 10, 1, 10, 16541);
+        PartData.addPart(brakes);
+        InHousePart wheel = new InHousePart(PartData.generateId(PartData.getAllParts()), "wheel", 12.99, 16, 1, 10, 651);
+        PartData.addPart(wheel);
+        InHousePart seat = new InHousePart(PartData.generateId(PartData.getAllParts()), "seat", 12.99, 10, 1, 10, 6511);
+        PartData.addPart(seat);
+        OutsourcedPart door = new OutsourcedPart(PartData.generateId(PartData.getAllParts()), "door", 45.99, 10, 1, 10, "company one");
+        PartData.addPart(door);
         launch(args);
     }
 }

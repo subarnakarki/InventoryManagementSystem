@@ -1,17 +1,15 @@
 package controller;
 
-import helper.Helper;
+import model.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import model.DataProvider;
+import model.PartData;
 import model.InHousePart;
 import model.OutsourcedPart;
 import model.Part;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -72,11 +70,11 @@ public class AddPartForm implements Initializable {
 
             Part newPart;
             if (partIsInhouse) {
-                newPart = new InHousePart(DataProvider.generateId(DataProvider.getAllParts()), name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
+                newPart = new InHousePart(PartData.generateId(PartData.getAllParts()), name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
             } else {
-                newPart = new OutsourcedPart(DataProvider.generateId(DataProvider.getAllParts()), name , price, stock, min, max,machineIdOrCompanyTxt.getText());
+                newPart = new OutsourcedPart(PartData.generateId(PartData.getAllParts()), name , price, stock, min, max,machineIdOrCompanyTxt.getText());
             }
-            DataProvider.addPart(newPart);
+            PartData.addPart(newPart);
             helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
         } catch (NumberFormatException e) {
                 helper.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", "Invalid form data, please check all input");

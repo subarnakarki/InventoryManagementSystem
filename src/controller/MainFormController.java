@@ -1,13 +1,13 @@
 package controller;
 
-import helper.Helper;
+import model.Helper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import model.DataProvider;
+import model.PartData;
 import model.InHousePart;
 import model.Part;
 
@@ -59,7 +59,7 @@ public class MainFormController implements Initializable {
             boolean deletePart = helper.createAlert( Alert.AlertType.CONFIRMATION,"Delete Part Confirmation", "Are you sure you want to delete the " + part.getName() + "?");
 
             if(deletePart == true) {
-                DataProvider.deletePart(part.getId());
+                PartData.deletePart(part.getId());
                 System.out.println(part instanceof InHousePart ? "Inhouse part deleted" : "Outsourced Part deleted");
             }
         } else {
@@ -84,7 +84,7 @@ public class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        partsTableView.setItems(DataProvider.getAllParts());
+        partsTableView.setItems(PartData.getAllParts());
 
         partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -98,6 +98,6 @@ public class MainFormController implements Initializable {
 
     public void onActionSearchPart(KeyEvent actionEvent) {
         String searchText = searchPartsTextField.getText();
-        DataProvider.search(searchText, partsTableView);
+        PartData.search(searchText, partsTableView);
     }
 }

@@ -1,4 +1,4 @@
-package helper;
+package model;
 
 import controller.ModifyPartFormController;
 import javafx.event.ActionEvent;

@@ -1,10 +1,11 @@
 package controller;
 
-import helper.Helper;
+import model.Helper;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.DataProvider;
+import model.PartData;
 import model.InHousePart;
 import model.OutsourcedPart;
 import model.Part;
@@ -14,17 +15,117 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ModifyPartFormController implements Initializable {
-    public ToggleGroup modifyPartToggleGroup;
-    public RadioButton inHouseRBtn;
-    public RadioButton outsourcedRBtn;
-    public TextField idTxt;
-    public TextField nameTxt;
-    public TextField invTxt;
-    public TextField priceCostTxt;
-    public TextField maxTxt;
-    public TextField minTxt;
-    public Label machineIdOrCompanyLabel;
-    public TextField machineIdOrCompanyTxt;
+    @FXML
+    private ToggleGroup modifyPartToggleGroup;
+    @FXML
+    private RadioButton inHouseRBtn;
+    @FXML
+    private RadioButton outsourcedRBtn;
+    @FXML
+    private TextField idTxt;
+    @FXML
+    private TextField nameTxt;
+    @FXML
+    private TextField invTxt;
+    @FXML
+    private TextField priceCostTxt;
+    @FXML
+    private TextField maxTxt;
+    @FXML
+    private TextField minTxt;
+    @FXML
+    private Label machineIdOrCompanyLabel;
+    @FXML
+    private TextField machineIdOrCompanyTxt;
+
+    public ToggleGroup getModifyPartToggleGroup() {
+        return modifyPartToggleGroup;
+    }
+
+    public void setModifyPartToggleGroup(ToggleGroup modifyPartToggleGroup) {
+        this.modifyPartToggleGroup = modifyPartToggleGroup;
+    }
+
+    public RadioButton getInHouseRBtn() {
+        return inHouseRBtn;
+    }
+
+    public void setInHouseRBtn(RadioButton inHouseRBtn) {
+        this.inHouseRBtn = inHouseRBtn;
+    }
+
+    public RadioButton getOutsourcedRBtn() {
+        return outsourcedRBtn;
+    }
+
+    public void setOutsourcedRBtn(RadioButton outsourcedRBtn) {
+        this.outsourcedRBtn = outsourcedRBtn;
+    }
+
+    public TextField getIdTxt() {
+        return idTxt;
+    }
+
+    public void setIdTxt(TextField idTxt) {
+        this.idTxt = idTxt;
+    }
+
+    public TextField getNameTxt() {
+        return nameTxt;
+    }
+
+    public void setNameTxt(TextField nameTxt) {
+        this.nameTxt = nameTxt;
+    }
+
+    public TextField getInvTxt() {
+        return invTxt;
+    }
+
+    public void setInvTxt(TextField invTxt) {
+        this.invTxt = invTxt;
+    }
+
+    public TextField getPriceCostTxt() {
+        return priceCostTxt;
+    }
+
+    public void setPriceCostTxt(TextField priceCostTxt) {
+        this.priceCostTxt = priceCostTxt;
+    }
+
+    public TextField getMaxTxt() {
+        return maxTxt;
+    }
+
+    public void setMaxTxt(TextField maxTxt) {
+        this.maxTxt = maxTxt;
+    }
+
+    public TextField getMinTxt() {
+        return minTxt;
+    }
+
+    public void setMinTxt(TextField minTxt) {
+        this.minTxt = minTxt;
+    }
+
+    public Label getMachineIdOrCompanyLabel() {
+        return machineIdOrCompanyLabel;
+    }
+
+    public void setMachineIdOrCompanyLabel(Label machineIdOrCompanyLabel) {
+        this.machineIdOrCompanyLabel = machineIdOrCompanyLabel;
+    }
+
+    public TextField getMachineIdOrCompanyTxt() {
+        return machineIdOrCompanyTxt;
+    }
+
+    public void setMachineIdOrCompanyTxt(TextField machineIdOrCompanyTxt) {
+        this.machineIdOrCompanyTxt = machineIdOrCompanyTxt;
+    }
+
     Helper helper = new Helper();
 
     public void onActionShowOutsourced(ActionEvent actionEvent) {
@@ -61,7 +162,7 @@ public class ModifyPartFormController implements Initializable {
             } else {
                 modifiedPart = new OutsourcedPart(id, name , price, stock, min, max,machineIdOrCompanyTxt.getText());
             }
-            DataProvider.modify(id, modifiedPart);
+            PartData.modify(id, modifiedPart);
             helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
         } catch (NumberFormatException e) {
             helper.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", "Invalid form data, please check all input");
