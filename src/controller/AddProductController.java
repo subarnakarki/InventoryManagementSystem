@@ -69,14 +69,18 @@ public class AddProductForm implements Initializable {
         } else {
             helper.createAlert( Alert.AlertType.WARNING,"Select a part", "Select a part to add");
         }
-//        ProductData.addAssociatedPart(new InHousePart(1, "brakes", 12.99, 10, 1, 10, 16541));
-//        addedPartsTableView.setItems(ProductData.addProduct());
     }
 
     public void onActionRemoveAssociatedPart(ActionEvent actionEvent) {
     }
 
     public void onActionSaveProduct(ActionEvent actionEvent) throws IOException {
+        String name = nameTxt.getText();
+        double price = Double.parseDouble(priceCostTxt.getText());
+        int stock = Integer.parseInt(invTxt.getText());
+        int min = Integer.parseInt(minTxt.getText());
+        int max = Integer.parseInt(maxTxt.getText());
+        ProductData.addProduct(new Product((int)(Helper.generateProductId()), name, stock, price, max,min,ProductData.getAssociatedParts()));
         helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
 

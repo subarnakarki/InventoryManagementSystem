@@ -70,9 +70,9 @@ public class AddPartForm implements Initializable {
 
             Part newPart;
             if (partIsInhouse) {
-                newPart = new InHousePart(PartData.generateId(PartData.getAllParts()), name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
+                newPart = new InHousePart(Helper.generatePartId(), name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
             } else {
-                newPart = new OutsourcedPart(PartData.generateId(PartData.getAllParts()), name , price, stock, min, max,machineIdOrCompanyTxt.getText());
+                newPart = new OutsourcedPart(Helper.generatePartId(), name , price, stock, min, max,machineIdOrCompanyTxt.getText());
             }
             PartData.addPart(newPart);
             helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
