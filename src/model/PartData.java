@@ -29,10 +29,6 @@ public class PartData {
         return filteredParts;
     }
 
-    public static int generateId(ObservableList<Part> parts) {
-        return parts.size() + 1;
-    }
-
     public static ObservableList<Part> filterParts(int id) {
         if (!(PartData.getFilteredParts().isEmpty())) {
             // clear list

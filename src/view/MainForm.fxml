@@ -46,7 +46,7 @@
          <children>
             <TextField fx:id="searchProductsTextField" layoutX="225.0" layoutY="23.0" onAction="#onActionSearchProduct" promptText="Search by Product ID or Name" />
             <Label layoutX="25.0" layoutY="27.0" style="-fx-font-weight: bold;" text="Products" />
-            <TableView layoutX="14.0" layoutY="48.0" prefHeight="162.0" prefWidth="391.0">
+            <TableView fx:id="productsTableView" layoutX="14.0" layoutY="48.0" prefHeight="162.0" prefWidth="391.0">
                <columns>
                   <TableColumn fx:id="productIdColumn" prefWidth="77.0" text="Product ID" />
                   <TableColumn fx:id="productNameColumn" prefWidth="87.0" text="Product Name" />

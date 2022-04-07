@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="508.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPartForm">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="508.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPartController">
     <children>
       <Label layoutX="15.0" layoutY="6.0" prefHeight="39.0" prefWidth="61.0" text="Add Part">
          <font>

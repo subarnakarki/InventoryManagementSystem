@@ -5,9 +5,7 @@ import javafx.collections.ObservableList;
 
 public class ProductData {
     private static ObservableList<Product> products = FXCollections.observableArrayList();
-    private static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
-
-
+    private static ObservableList<Product> associatedProducts = FXCollections.observableArrayList();
 
     public static ObservableList<Product> getProducts() {
         return products;
@@ -20,14 +18,26 @@ public class ProductData {
     public static void addProduct(Product product) {
         products.add(product);
     }
-    public static ObservableList<Part> getAssociatedParts() {
-        return associatedParts;
+    public static ObservableList<Product> getAssociatedProducts() {
+        return associatedProducts;
+    }
+//
+    public static void setAssociatedProducts(ObservableList<Product> associatedProducts) {
+        ProductData.associatedProducts = associatedProducts;
+    }
+    public static void addAssociatedProduct(Product associatedProduct) {
+        associatedProducts.add(associatedProduct);
     }
 
-    public static void setAssociatedParts(ObservableList<Part> associatedParts) {
-        ProductData.associatedParts = associatedParts;
-    }
-    public static void addAssociatedPart(Part associatedPart) {
-        associatedParts.add((Part) associatedPart);
+    public static boolean modify(int id, Product modifiedProduct) {
+        int index = 0;
+        for(Product product : ProductData.getProducts()) {
+            if(product.getId() == id) {
+                ProductData.getProducts().set(index, modifiedProduct);
+                return true;
+            }
+            index++;
+        }
+        return false;
     }
 }

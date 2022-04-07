@@ -1,21 +1,21 @@
 package controller;
 
-import model.Helper;
+import javafx.fxml.FXMLLoader;
+import model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import model.PartData;
-import model.InHousePart;
-import model.Part;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainFormController implements Initializable {
+    @FXML
+    public TableView productsTableView;
     @FXML
     private TextField searchPartsTextField;
     @FXML
@@ -47,7 +47,7 @@ public class MainFormController implements Initializable {
 
     public void onActionModifyPart(ActionEvent actionEvent) throws IOException {
         if(partsTableView.getSelectionModel().getSelectedIndex() > -1) {
-            helper.sendDataAndLoadPage(actionEvent, partsTableView, "/view/ModifyPartForm.fxml");
+            helper.sendDataAndLoadPage(actionEvent, partsTableView, "/view/ModifyPartForm.fxml", "parts");
         } else {
             helper.createAlert( Alert.AlertType.WARNING,"Part Not Selected", "Select part to modify");
         }
@@ -72,7 +72,11 @@ public class MainFormController implements Initializable {
     }
 
     public void onActionModifyProduct(ActionEvent actionEvent) throws IOException {
-        helper.navigateToScreen(actionEvent, "/view/ModifyProductForm.fxml");
+        if(productsTableView.getSelectionModel().getSelectedIndex() > -1) {
+            helper.sendDataAndLoadPage(actionEvent, productsTableView, "/view/ModifyProductForm.fxml", "products");
+        } else {
+            helper.createAlert( Alert.AlertType.WARNING,"Product Not Selected", "Select product to modify");
+        }
     }
 
     public void onActionDeleteProduct(ActionEvent actionEvent) {
@@ -90,6 +94,13 @@ public class MainFormController implements Initializable {
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        productsTableView.setItems(ProductData.getProducts());
+        productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
     }
 
     public void onActionSearchProduct(ActionEvent actionEvent) {

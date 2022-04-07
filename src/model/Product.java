@@ -1,6 +1,4 @@
-package model; /**
-* Supplied class Part.java 
- */
+package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,7 +7,7 @@ import javafx.collections.ObservableList;
  *
  * @author Subarna Karki
  */
-public abstract class Product {
+public class Product {
     private int id;
     private String name;
     private int stock;
