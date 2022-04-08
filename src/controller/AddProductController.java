@@ -56,13 +56,13 @@ public class AddProductController implements Initializable {
             Part selectedPart = (Part) allPartsTableView.getSelectionModel().getSelectedItem();
             int selectedPartID = selectedPart.getId();
             boolean partAlreadyAdded = false;
+
             if (associatedParts.isEmpty()) {
                 associatedParts.add(selectedPart);
             }
             for (Part part : associatedParts) {
                 if (selectedPartID == part.getId()) {
                     partAlreadyAdded = true;
-                    System.out.println("part already added");
                 }
             }
             if (!partAlreadyAdded) {
@@ -91,13 +91,13 @@ public class AddProductController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        allPartsTableView.setItems(ProductData.getProducts());
+        allPartsTableView.setItems(PartData.getAllParts());
         allPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         allPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         allPartsInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         allPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        addedPartsTableView.setItems(ProductData.getAssociatedProducts());
+        addedPartsTableView.setItems(associatedParts);
         addedPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         addedPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         addedPartsInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
