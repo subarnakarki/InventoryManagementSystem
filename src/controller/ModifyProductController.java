@@ -3,6 +3,7 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyEvent;
 import model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ModifyProductController implements Initializable {
+    public TextField searchPartsTextField;
     @FXML
     private TextField idTxt;
     @FXML
@@ -51,7 +53,6 @@ public class ModifyProductController implements Initializable {
     @FXML
     private TableColumn addedPartsPriceColumn;
 
-//    private currentProduct =
     private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
 
     Helper helper = new Helper();
@@ -81,7 +82,6 @@ public class ModifyProductController implements Initializable {
                 }
                 if (!partAlreadyAdded) {
                     associatedParts.add(selectedPart);
-
                 } else {
                     helper.createAlert( Alert.AlertType.WARNING,"Part Already Added", "Part already added, please select another part");
                     System.out.println("Part already added!");
@@ -135,10 +135,14 @@ public class ModifyProductController implements Initializable {
         allPartsInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         allPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-//        addedPartsTableView.setItems(associatedParts);
         addedPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         addedPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         addedPartsInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         addedPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+    }
+
+    public void onActionSearchPart(KeyEvent keyEvent) {
+        String searchText = searchPartsTextField.getText();
+        PartData.search(searchText, allPartsTableView);
     }
 }

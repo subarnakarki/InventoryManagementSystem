@@ -3,6 +3,7 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyEvent;
 import model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AddProductController implements Initializable {
+    public TextField searchPartsTextField;
     @FXML
     private TextField idTxt;
     @FXML
@@ -117,5 +119,10 @@ public class AddProductController implements Initializable {
         } else {
             helper.createAlert(Alert.AlertType.WARNING, "No Part Selected", "There are no parts selected to remove");
         }
+    }
+
+    public void onActionSearchPart(KeyEvent keyEvent) {
+        String searchText = searchPartsTextField.getText();
+        PartData.search(searchText, allPartsTableView);
     }
 }

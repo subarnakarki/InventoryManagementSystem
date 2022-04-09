@@ -2,9 +2,11 @@ package model;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 
 public class ProductData {
     private static ObservableList<Product> products = FXCollections.observableArrayList();
+    private static ObservableList<Part> filteredParts = FXCollections.observableArrayList();
 
     public static ObservableList<Product> getProducts() {
         return products;
@@ -38,5 +40,37 @@ public class ProductData {
         }
 //        ObservableList<Part> associatedParts = FXCollections.observableArrayList();
         return null;
+    }
+
+    public static  ObservableList<Part> getFilteredParts() {
+        return filteredParts;
+    }
+
+    public static ObservableList<Part> filterParts(String searchText) {
+        if (!(PartData.getFilteredParts().isEmpty())) {
+            // clear list
+            PartData.getFilteredParts().clear();
+        }
+        for (Part part : PartData.getAllParts()) {
+            if(part.getName().contains(searchText)) {
+                PartData.getFilteredParts().add(part);
+            }
+        }
+        if (PartData.getFilteredParts().isEmpty()) {
+            return PartData.getAllParts();
+        } else {
+            return PartData.getFilteredParts();
+        }
+    }
+
+    public static void search(String searchText, TableView tableView) {
+        try {
+            int id = Integer.parseInt(searchText);
+            tableView.setItems(filterParts(searchText));
+            tableView.setItems(getFilteredParts());
+        } catch (NumberFormatException error) {
+            tableView.setItems(filterParts(searchText));
+            tableView.setItems(getFilteredParts());
+        }
     }
 }
