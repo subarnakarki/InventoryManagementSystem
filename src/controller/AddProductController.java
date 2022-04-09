@@ -77,13 +77,17 @@ public class AddProductController implements Initializable {
     }
 
     public void onActionSaveProduct(ActionEvent actionEvent) throws IOException {
-        String name = nameTxt.getText();
-        double price = Double.parseDouble(priceCostTxt.getText());
-        int stock = Integer.parseInt(invTxt.getText());
-        int min = Integer.parseInt(minTxt.getText());
-        int max = Integer.parseInt(maxTxt.getText());
-        ProductData.addProduct(new Product((int)(Helper.generateProductId()), name, stock, price, max,min,associatedParts));
-        helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
+        try {
+            String name = nameTxt.getText();
+            double price = Double.parseDouble(priceCostTxt.getText());
+            int stock = Integer.parseInt(invTxt.getText());
+            int min = Integer.parseInt(minTxt.getText());
+            int max = Integer.parseInt(maxTxt.getText());
+            ProductData.addProduct(new Product((int)(Helper.generateProductId()), name, stock, price, max,min,associatedParts));
+            helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
+        } catch(NumberFormatException error) {
+            helper.createAlert(Alert.AlertType.ERROR, "Invalid Input For Product", "Error: Please check all input for the product");
+        }
     }
 
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
@@ -105,5 +109,13 @@ public class AddProductController implements Initializable {
     }
 
     public void onActionRemoveAssociatedPart(ActionEvent actionEvent) {
+        if (addedPartsTableView.getSelectionModel().getSelectedIndex() > -1) {
+            Part part = (Part) addedPartsTableView.getSelectionModel().getSelectedItem();
+            if (associatedParts.contains(part)) {
+                associatedParts.remove(part);
+            }
+        } else {
+            helper.createAlert(Alert.AlertType.WARNING, "No Part Selected", "There are no parts selected to remove");
+        }
     }
 }

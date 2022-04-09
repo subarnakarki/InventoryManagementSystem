@@ -53,7 +53,7 @@ public class Helper {
             loader.setLocation(getClass().getResource(path));
             loader.load();
 
-            System.out.println("PRODUCTS");
+//            System.out.println("PRODUCTS");
             ModifyProductController modifyProductController = loader.getController();
             modifyProductController.sendProduct((Product) tableView.getSelectionModel().getSelectedItem());
 
