@@ -1,6 +1,6 @@
 package model;
 
-public class InHousePart extends Part {
+public class InHouse extends Part {
     private int machineId;
 
     public int getMachineId() {
@@ -11,7 +11,7 @@ public class InHousePart extends Part {
         this.machineId = machineId;
     }
 
-    public InHousePart(int id, String name, double price, int stock, int min, int max, int machineId) {
+    public InHouse(int id, String name, double price, int stock, int min, int max, int machineId) {
         super(id, name, price, stock, min, max);
         this.machineId = machineId;
     }

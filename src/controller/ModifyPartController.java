@@ -5,8 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.InHousePart;
-import model.OutsourcedPart;
+import model.InHouse;
+import model.Outsourced;
 import model.Part;
 
 import java.io.IOException;
@@ -157,9 +157,9 @@ public class ModifyPartController implements Initializable {
             Part modifiedPart;
             String companyName = partIsInhouse ? null : machineIdOrCompanyTxt.getText();
             if (partIsInhouse) {
-                modifiedPart = new InHousePart(id, name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
+                modifiedPart = new InHouse(id, name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
             } else {
-                modifiedPart = new OutsourcedPart(id, name , price, stock, min, max,machineIdOrCompanyTxt.getText());
+                modifiedPart = new Outsourced(id, name , price, stock, min, max,machineIdOrCompanyTxt.getText());
             }
             Inventory.PartData.modify(id, modifiedPart);
             inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
@@ -181,14 +181,14 @@ public class ModifyPartController implements Initializable {
         maxTxt.setText(String.valueOf(part.getMax()));
         minTxt.setText(String.valueOf(part.getMin()));
 
-        if(part instanceof InHousePart) {
+        if(part instanceof InHouse) {
             modifyPartToggleGroup.selectToggle(inHouseRBtn);
-            machineIdOrCompanyTxt.setText(String.valueOf(((InHousePart) part).getMachineId()));
+            machineIdOrCompanyTxt.setText(String.valueOf(((InHouse) part).getMachineId()));
             machineIdOrCompanyLabel.setText("Machine ID");
 
         } else {
             modifyPartToggleGroup.selectToggle(outsourcedRBtn);
-            machineIdOrCompanyTxt.setText(String.valueOf(((OutsourcedPart) part).getCompanyName()));
+            machineIdOrCompanyTxt.setText(String.valueOf(((Outsourced) part).getCompanyName()));
             machineIdOrCompanyLabel.setText("Company Name");
         }
     }

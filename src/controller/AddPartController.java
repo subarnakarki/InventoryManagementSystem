@@ -5,8 +5,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.InHousePart;
-import model.OutsourcedPart;
+import model.InHouse;
+import model.Outsourced;
 import model.Part;
 
 import java.io.IOException;
@@ -69,9 +69,9 @@ public class AddPartController implements Initializable {
 
             Part newPart;
             if (partIsInhouse) {
-                newPart = new InHousePart(Inventory.generatePartId(), name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
+                newPart = new InHouse(Inventory.generatePartId(), name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
             } else {
-                newPart = new OutsourcedPart(Inventory.generatePartId(), name , price, stock, min, max,machineIdOrCompanyTxt.getText());
+                newPart = new Outsourced(Inventory.generatePartId(), name , price, stock, min, max,machineIdOrCompanyTxt.getText());
             }
             Inventory.PartData.addPart(newPart);
             inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");

@@ -59,7 +59,7 @@ public class MainFormController implements Initializable {
 
             if(deletePart == true) {
                 Inventory.PartData.deletePart(part.getId());
-                System.out.println(part instanceof InHousePart ? "Inhouse part deleted" : "Outsourced Part deleted");
+                System.out.println(part instanceof InHouse ? "Inhouse part deleted" : "Outsourced Part deleted");
             }
         } else {
             inventory.createAlert( Alert.AlertType.WARNING,"Part Not Selected", "Select part to delete");

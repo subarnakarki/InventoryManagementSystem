@@ -97,8 +97,6 @@ public class ModifyProductController implements Initializable {
 
         if (addedPartsTableView.getSelectionModel().getSelectedIndex() > -1) {
             Part partToRemove = (Part) addedPartsTableView.getSelectionModel().getSelectedItem();
-//            Part currentParts = addedPartsTableView.getSelectionModel().getSelectedItem();
-
                 for(Part part : tempAssociatedParts) {
                 System.out.println(part.getId());
                 System.out.println(partToRemove.getId());
