@@ -19,9 +19,13 @@ import java.util.Optional;
 
 
 public class Inventory {
+    private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    private static int partId = 0;
+    private static int productId = 0;
     public static int generateProductId() {
-        return ProductData.getProducts().size() + 1;
-
+        productId = productId + 1;
+        return productId;
     }
 
     public void navigateToScreen(ActionEvent actionEvent, String path) throws IOException {
@@ -33,7 +37,8 @@ public class Inventory {
     }
 
     public static int generatePartId() {
-        return PartData.getAllParts().size() + 1;
+        partId = partId + 1;
+        return partId;
     }
 
     public void sendDataAndLoadPage(ActionEvent actionEvent, TableView tableView, String path, String dataType) throws IOException {
@@ -74,18 +79,18 @@ public class Inventory {
         return false;
     }
 
+
     public static class PartData {
-        // type of object for the observable list in the diamond
-        private static ObservableList<Part> allParts = FXCollections.observableArrayList();
+//        private static ObservableList<Part> allParts = FXCollections.observableArrayList();
         private static ObservableList<Part> filteredParts = FXCollections.observableArrayList();
 
         public static void addPart(Part part) {
             allParts.add(part);
         }
         public static boolean deletePart(int id) {
-            for(Part part : getAllParts()) {
+            for(Part part : allParts) {
                 if(part.getId() == id) {
-                    return getAllParts().remove(part);
+                    return allParts.remove(part);
                 }
             }
             return false;
@@ -104,13 +109,13 @@ public class Inventory {
                 // clear list
                 getFilteredParts().clear();
             }
-            for (Part part : getAllParts()) {
+            for (Part part : allParts) {
                 if(part.getId() == id) {
                     getFilteredParts().add(part);
                 }
             }
             if (getFilteredParts().isEmpty()) {
-                return getAllParts();
+                return allParts;
             } else {
                 return getFilteredParts();
             }
@@ -121,13 +126,13 @@ public class Inventory {
                 // clear list
                 getFilteredParts().clear();
             }
-            for (Part part : getAllParts()) {
+            for (Part part : allParts) {
                 if(part.getName().contains(searchText)) {
                     getFilteredParts().add(part);
                 }
             }
             if (getFilteredParts().isEmpty()) {
-                return getAllParts();
+                return allParts;
             } else {
                 return getFilteredParts();
             }
@@ -146,9 +151,9 @@ public class Inventory {
 
         public static boolean modify(int id, Part modifiedPart) {
             int index = 0;
-            for(Part part : getAllParts()) {
+            for(Part part : allParts) {
                 if(part.getId() == id) {
-                    getAllParts().set(index, modifiedPart);
+                    allParts.set(index, modifiedPart);
                     return true;
                 }
                 index++;

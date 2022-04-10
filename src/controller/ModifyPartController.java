@@ -155,7 +155,6 @@ public class ModifyPartController implements Initializable {
             }
 
             Part modifiedPart;
-            String companyName = partIsInhouse ? null : machineIdOrCompanyTxt.getText();
             if (partIsInhouse) {
                 modifiedPart = new InHouse(id, name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
             } else {

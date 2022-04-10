@@ -85,7 +85,6 @@ public class MainFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         partsTableView.setItems(Inventory.PartData.getAllParts());
-
         partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
