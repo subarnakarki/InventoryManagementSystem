@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.fxml.FXMLLoader;
 import model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -79,9 +78,6 @@ public class MainFormController implements Initializable {
         }
     }
 
-    public void onActionDeleteProduct(ActionEvent actionEvent) {
-    }
-
     public void onActionExit(ActionEvent actionEvent) {
         System.exit(0);
     }
@@ -103,12 +99,16 @@ public class MainFormController implements Initializable {
 
     }
 
-    public void onActionSearchProduct(ActionEvent actionEvent) {
 
+    public void onActionDeleteProduct(ActionEvent actionEvent) {
+    }
+    public void onActionSearchProduct(KeyEvent actionEvent) {
+        String searchText = searchProductsTextField.getText();
+        ProductData.search(searchText, productsTableView);
     }
 
     public void onActionSearchPart(KeyEvent actionEvent) {
         String searchText = searchPartsTextField.getText();
-        PartData.search(searchText, partsTableView);
+        ProductData.search(searchText, partsTableView);
     }
 }

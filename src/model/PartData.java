@@ -13,9 +13,9 @@ public class PartData {
         allParts.add(part);
     }
     public static boolean deletePart(int id) {
-        for(Part part : PartData.getAllParts()) {
+        for(Part part : getAllParts()) {
             if(part.getId() == id) {
-                return PartData.getAllParts().remove(part);
+                return getAllParts().remove(part);
             }
         }
         return false;
@@ -29,56 +29,56 @@ public class PartData {
         return filteredParts;
     }
 
-    public static ObservableList<Part> filterParts(int id) {
-        if (!(PartData.getFilteredParts().isEmpty())) {
+    public static ObservableList<Part> filterPartsWithId(int id) {
+        if (!(getFilteredParts().isEmpty())) {
             // clear list
-            PartData.getFilteredParts().clear();
+            getFilteredParts().clear();
         }
-        for (Part part : PartData.getAllParts()) {
+        for (Part part : getAllParts()) {
             if(part.getId() == id) {
-                PartData.getFilteredParts().add(part);
+                getFilteredParts().add(part);
             }
         }
-        if (PartData.getFilteredParts().isEmpty()) {
-            return PartData.getAllParts();
+        if (getFilteredParts().isEmpty()) {
+            return getAllParts();
         } else {
-            return PartData.getFilteredParts();
+            return getFilteredParts();
         }
     }
 
-    public static ObservableList<Part> filterParts(String searchText) {
-        if (!(PartData.getFilteredParts().isEmpty())) {
+    public static ObservableList<Part> filterPartsWithText(String searchText) {
+        if (!(getFilteredParts().isEmpty())) {
             // clear list
-            PartData.getFilteredParts().clear();
+            getFilteredParts().clear();
         }
-        for (Part part : PartData.getAllParts()) {
+        for (Part part : getAllParts()) {
             if(part.getName().contains(searchText)) {
-                PartData.getFilteredParts().add(part);
+                getFilteredParts().add(part);
             }
         }
-        if (PartData.getFilteredParts().isEmpty()) {
-            return PartData.getAllParts();
+        if (getFilteredParts().isEmpty()) {
+            return getAllParts();
         } else {
-            return PartData.getFilteredParts();
+            return getFilteredParts();
         }
     }
 
     public static void search(String searchText, TableView tableView) {
         try {
             int id = Integer.parseInt(searchText);
-            tableView.setItems(filterParts(id));
+            tableView.setItems(filterPartsWithId(id));
             tableView.setItems(getFilteredParts());
         } catch (NumberFormatException error) {
-            tableView.setItems(filterParts(searchText));
+            tableView.setItems(filterPartsWithText(searchText));
             tableView.setItems(getFilteredParts());
         }
     }
 
     public static boolean modify(int id, Part modifiedPart) {
         int index = 0;
-        for(Part part : PartData.getAllParts()) {
+        for(Part part : getAllParts()) {
             if(part.getId() == id) {
-                PartData.getAllParts().set(index, modifiedPart);
+                getAllParts().set(index, modifiedPart);
                 return true;
             }
             index++;

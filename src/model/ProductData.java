@@ -6,7 +6,7 @@ import javafx.scene.control.TableView;
 
 public class ProductData {
     private static ObservableList<Product> products = FXCollections.observableArrayList();
-    private static ObservableList<Part> filteredParts = FXCollections.observableArrayList();
+    private static ObservableList<Product> filteredProducts = FXCollections.observableArrayList();
 
     public static ObservableList<Product> getProducts() {
         return products;
@@ -38,39 +38,53 @@ public class ProductData {
                 return product.getAssociatedParts();
             }
         }
-//        ObservableList<Part> associatedParts = FXCollections.observableArrayList();
         return null;
     }
 
-    public static  ObservableList<Part> getFilteredParts() {
-        return filteredParts;
+    public static  ObservableList<Product> getFilteredProducts() {
+        return filteredProducts;
     }
 
-    public static ObservableList<Part> filterParts(String searchText) {
-        if (!(PartData.getFilteredParts().isEmpty())) {
+    public static ObservableList<Product> filterProductsWithText(String searchText) {
+        if (!(getFilteredProducts().isEmpty())) {
             // clear list
-            PartData.getFilteredParts().clear();
+            getFilteredProducts().clear();
         }
-        for (Part part : PartData.getAllParts()) {
-            if(part.getName().contains(searchText)) {
-                PartData.getFilteredParts().add(part);
+        for (Product product : getProducts()) {
+            if(product.getName().contains(searchText)) {
+                getFilteredProducts().add(product);
             }
         }
-        if (PartData.getFilteredParts().isEmpty()) {
-            return PartData.getAllParts();
+        if (getFilteredProducts().isEmpty()) {
+            return getProducts();
         } else {
-            return PartData.getFilteredParts();
+            return getFilteredProducts();
         }
     }
-
+    public static ObservableList<Product> filterProductsWithId(int id) {
+        if (!(getFilteredProducts().isEmpty())) {
+            getFilteredProducts().clear();
+        }
+        for (Product product : getProducts()) {
+            if(product.getId() == id) {
+                getFilteredProducts().add(product);
+            }
+        }
+        if (getFilteredProducts().isEmpty()) {
+            return getProducts();
+        } else {
+            return getFilteredProducts();
+        }
+    }
     public static void search(String searchText, TableView tableView) {
+        System.out.println(searchText);
         try {
             int id = Integer.parseInt(searchText);
-            tableView.setItems(filterParts(searchText));
-            tableView.setItems(getFilteredParts());
+            tableView.setItems(filterProductsWithId(id));
+            tableView.setItems(getFilteredProducts());
         } catch (NumberFormatException error) {
-            tableView.setItems(filterParts(searchText));
-            tableView.setItems(getFilteredParts());
+            tableView.setItems(filterProductsWithText(searchText));
+            tableView.setItems(getFilteredProducts());
         }
     }
 }
