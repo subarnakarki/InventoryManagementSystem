@@ -53,54 +53,63 @@ public class ModifyProductController implements Initializable {
     @FXML
     private TableColumn addedPartsPriceColumn;
 
-    private ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+    private ObservableList<Part> tempAssociatedParts = FXCollections.observableArrayList();
 
-    Helper helper = new Helper();
+    Inventory inventory = new Inventory();
     public void onActionAdd(ActionEvent actionEvent) {
         if(allPartsTableView.getSelectionModel().getSelectedIndex() > -1) {
             Part selectedPart = (Part) allPartsTableView.getSelectionModel().getSelectedItem();
             int selectedPartID = selectedPart.getId();
             boolean partAlreadyAdded = false;
             int currentPartID = Integer.parseInt(idTxt.getText());
-            ObservableList<Part> partsOnProduct = ProductData.getAssociatedPartsForProduct(currentPartID);
+            ObservableList<Part> partsOnProduct = Inventory.ProductData.getAssociatedPartsForProduct(currentPartID);
             if (partsOnProduct != null) {
                 for (Part part : partsOnProduct) {
-                    if(!associatedParts.contains(part)) {
-                        associatedParts.add(part);
+                    if(!tempAssociatedParts.contains(part)) {
+                        tempAssociatedParts.add(part);
                     }
                 }
             }
-            if (associatedParts.size() == 0 && partsOnProduct == null ) {
+            if (tempAssociatedParts.size() == 0 && partsOnProduct == null ) {
                 System.out.println("associatedParts size is zero:");
-                associatedParts= FXCollections.observableArrayList();
-                associatedParts.add(selectedPart);
+                tempAssociatedParts= FXCollections.observableArrayList();
+                tempAssociatedParts.add(selectedPart);
             } else {
-                for (Part part : associatedParts) {
+                for (Part part : tempAssociatedParts) {
                     if (selectedPartID == part.getId()) {
                         partAlreadyAdded = true;
                     }
                 }
                 if (!partAlreadyAdded) {
-                    associatedParts.add(selectedPart);
+                    tempAssociatedParts.add(selectedPart);
                 } else {
-                    helper.createAlert( Alert.AlertType.WARNING,"Part Already Added", "Part already added, please select another part");
+                    inventory.createAlert( Alert.AlertType.WARNING,"Part Already Added", "Part already added, please select another part");
                     System.out.println("Part already added!");
                 }
             }
-            addedPartsTableView.setItems(associatedParts);
+            addedPartsTableView.setItems(tempAssociatedParts);
         } else {
-            helper.createAlert( Alert.AlertType.WARNING,"Select a part", "Select a part to add");
+            inventory.createAlert( Alert.AlertType.WARNING,"Select a part", "Select a part to add");
         }
     }
 
     public void onActionRemoveAssociatedPart(ActionEvent actionEvent) {
+
         if (addedPartsTableView.getSelectionModel().getSelectedIndex() > -1) {
-            Part part = (Part) addedPartsTableView.getSelectionModel().getSelectedItem();
-            if (associatedParts.contains(part)) {
-                associatedParts.remove(part);
+            Part partToRemove = (Part) addedPartsTableView.getSelectionModel().getSelectedItem();
+//            Part currentParts = addedPartsTableView.getSelectionModel().getSelectedItem();
+
+                for(Part part : tempAssociatedParts) {
+                System.out.println(part.getId());
+                System.out.println(partToRemove.getId());
+                if(partToRemove.getId() == part.getId()) {
+                    tempAssociatedParts.remove(partToRemove);
+                    break;
+                }
             }
+            addedPartsTableView.setItems(tempAssociatedParts);
         } else {
-            helper.createAlert(Alert.AlertType.WARNING, "No Part Selected", "There are no parts selected to remove");
+            inventory.createAlert(Alert.AlertType.WARNING, "No Part Selected", "There are no parts selected to remove");
         }
     }
 
@@ -111,12 +120,12 @@ public class ModifyProductController implements Initializable {
         int min = Integer.parseInt(minTxt.getText());
         int max = Integer.parseInt(maxTxt.getText());
         int id = Integer.parseInt(idTxt.getText());
-        ProductData.modify(id, new Product(id, name, stock, price, max,min,associatedParts));
-        helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
+        Inventory.ProductData.modify(id, new Product(id, name, stock, price, max,min,tempAssociatedParts));
+        inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
 
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
-        helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
+        inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
     public void sendProduct(Product product) {
         idTxt.setText(String.valueOf(product.getId()));
@@ -125,16 +134,22 @@ public class ModifyProductController implements Initializable {
         priceCostTxt.setText(String.valueOf(product.getPrice()));
         maxTxt.setText(String.valueOf(product.getMax()));
         minTxt.setText(String.valueOf(product.getMin()));
-        addedPartsTableView.setItems(product.getAssociatedParts());
+
+        if(product.getAllAssociatedParts() != null)  {
+            for(Part part : product.getAllAssociatedParts()) {
+                tempAssociatedParts.add(part);
+            }
+        }
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        allPartsTableView.setItems(PartData.getAllParts());
+        allPartsTableView.setItems(Inventory.PartData.getAllParts());
         allPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         allPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         allPartsInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         allPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+        addedPartsTableView.setItems(tempAssociatedParts);
         addedPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         addedPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         addedPartsInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -143,6 +158,6 @@ public class ModifyProductController implements Initializable {
 
     public void onActionSearchPart(KeyEvent keyEvent) {
         String searchText = searchPartsTextField.getText();
-        PartData.search(searchText, allPartsTableView);
+        Inventory.PartData.search(searchText, allPartsTableView);
     }
 }

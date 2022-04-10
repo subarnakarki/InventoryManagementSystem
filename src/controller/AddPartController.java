@@ -1,11 +1,10 @@
 package controller;
 
-import model.Helper;
+import model.Inventory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.PartData;
 import model.InHousePart;
 import model.OutsourcedPart;
 import model.Part;
@@ -48,7 +47,7 @@ public class AddPartController implements Initializable {
     @FXML
     public TextField machineIdOrCompanyTxt;
 
-    Helper helper = new Helper();
+    Inventory inventory = new Inventory();
 
     public void onActionSavePart(ActionEvent actionEvent) throws IOException {
         try {
@@ -70,21 +69,21 @@ public class AddPartController implements Initializable {
 
             Part newPart;
             if (partIsInhouse) {
-                newPart = new InHousePart(Helper.generatePartId(), name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
+                newPart = new InHousePart(Inventory.generatePartId(), name , price, stock, min, max,Integer.parseInt(machineIdOrCompanyTxt.getText()));
             } else {
-                newPart = new OutsourcedPart(Helper.generatePartId(), name , price, stock, min, max,machineIdOrCompanyTxt.getText());
+                newPart = new OutsourcedPart(Inventory.generatePartId(), name , price, stock, min, max,machineIdOrCompanyTxt.getText());
             }
-            PartData.addPart(newPart);
-            helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
+            Inventory.PartData.addPart(newPart);
+            inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
         } catch (NumberFormatException e) {
-                helper.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", "Invalid form data, please check all input");
+                inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", "Invalid form data, please check all input");
         } catch (Exception e) {
-            helper.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", e.getMessage());
+            inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", e.getMessage());
         }
     }
 
     public void onActionDisplayMainForm(ActionEvent actionEvent) throws IOException {
-        helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
+        inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
 
     public void onActionShowOutsourced(ActionEvent actionEvent) {

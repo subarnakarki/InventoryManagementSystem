@@ -51,27 +51,27 @@ public class AddProductController implements Initializable {
     private TableColumn addedPartsInventorColumn;
     @FXML
     private TableColumn addedPartsPriceColumn;
-    private static ObservableList<Part> associatedParts = FXCollections.observableArrayList();
-    Helper helper = new Helper();
+    private static ObservableList<Part> tempAssociatedParts = FXCollections.observableArrayList();
+    Inventory inventory = new Inventory();
     public void onActionAdd(ActionEvent actionEvent) {
         if(allPartsTableView.getSelectionModel().getSelectedIndex() > -1) {
             Part selectedPart = (Part) allPartsTableView.getSelectionModel().getSelectedItem();
             int selectedPartID = selectedPart.getId();
             boolean partAlreadyAdded = false;
 
-            if (associatedParts.isEmpty()) {
-                associatedParts.add(selectedPart);
+            if (tempAssociatedParts.isEmpty()) {
+                tempAssociatedParts.add(selectedPart);
             }
-            for (Part part : associatedParts) {
+            for (Part part : tempAssociatedParts) {
                 if (selectedPartID == part.getId()) {
                     partAlreadyAdded = true;
                 }
             }
             if (!partAlreadyAdded) {
-                associatedParts.add(selectedPart);
+                tempAssociatedParts.add(selectedPart);
             }
         } else {
-            helper.createAlert( Alert.AlertType.WARNING,"Select a part", "Select a part to add");
+            inventory.createAlert( Alert.AlertType.WARNING,"Select a part", "Select a part to add");
         }
     }
 
@@ -85,25 +85,29 @@ public class AddProductController implements Initializable {
             int stock = Integer.parseInt(invTxt.getText());
             int min = Integer.parseInt(minTxt.getText());
             int max = Integer.parseInt(maxTxt.getText());
-            ProductData.addProduct(new Product((int)(Helper.generateProductId()), name, stock, price, max,min,associatedParts));
-            helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
+            ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+            for (Part part : tempAssociatedParts) {
+                associatedParts.add(part);
+            }
+            Inventory.ProductData.addProduct(new Product((int)(Inventory.generateProductId()), name, stock, price, max,min,associatedParts));
+            inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
         } catch(NumberFormatException error) {
-            helper.createAlert(Alert.AlertType.ERROR, "Invalid Input For Product", "Error: Please check all input for the product");
+            inventory.createAlert(Alert.AlertType.ERROR, "Invalid Input For Product", "Error: Please check all input for the product");
         }
     }
 
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
-        helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
+        inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        allPartsTableView.setItems(PartData.getAllParts());
+        allPartsTableView.setItems(Inventory.PartData.getAllParts());
         allPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         allPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         allPartsInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         allPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-        addedPartsTableView.setItems(associatedParts);
+        tempAssociatedParts.clear();
+        addedPartsTableView.setItems(tempAssociatedParts);
         addedPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         addedPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         addedPartsInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -113,16 +117,16 @@ public class AddProductController implements Initializable {
     public void onActionRemoveAssociatedPart(ActionEvent actionEvent) {
         if (addedPartsTableView.getSelectionModel().getSelectedIndex() > -1) {
             Part part = (Part) addedPartsTableView.getSelectionModel().getSelectedItem();
-            if (associatedParts.contains(part)) {
-                associatedParts.remove(part);
+            if (tempAssociatedParts.contains(part)) {
+                tempAssociatedParts.remove(part);
             }
         } else {
-            helper.createAlert(Alert.AlertType.WARNING, "No Part Selected", "There are no parts selected to remove");
+            inventory.createAlert(Alert.AlertType.WARNING, "No Part Selected", "There are no parts selected to remove");
         }
     }
 
     public void onActionSearchPart(KeyEvent keyEvent) {
         String searchText = searchPartsTextField.getText();
-        PartData.search(searchText, allPartsTableView);
+        Inventory.PartData.search(searchText, allPartsTableView);
     }
 }

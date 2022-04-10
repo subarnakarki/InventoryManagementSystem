@@ -18,18 +18,18 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        InHousePart brakes = new InHousePart(Helper.generatePartId(), "brakes", 12.99, 10, 1, 10, 16541);
-        PartData.addPart(brakes);
-        InHousePart wheel = new InHousePart(Helper.generatePartId(), "wheel", 12.99, 16, 1, 10, 651);
-        PartData.addPart(wheel);
-        InHousePart seat = new InHousePart(Helper.generatePartId(), "seat", 12.99, 10, 1, 10, 6511);
-        PartData.addPart(seat);
-        OutsourcedPart door = new OutsourcedPart(Helper.generatePartId(), "door", 45.99, 10, 1, 10, "company one");
-        PartData.addPart(door);
+        InHousePart brakes = new InHousePart(Inventory.generatePartId(), "brakes", 12.99, 10, 1, 10, 16541);
+        Inventory.PartData.addPart(brakes);
+        InHousePart wheel = new InHousePart(Inventory.generatePartId(), "wheel", 12.99, 16, 1, 10, 651);
+        Inventory.PartData.addPart(wheel);
+        InHousePart seat = new InHousePart(Inventory.generatePartId(), "seat", 12.99, 10, 1, 10, 6511);
+        Inventory.PartData.addPart(seat);
+        OutsourcedPart door = new OutsourcedPart(Inventory.generatePartId(), "door", 45.99, 10, 1, 10, "company one");
+        Inventory.PartData.addPart(door);
 
-        ProductData.addProduct(new Product(1, "car", 1, 1, 1,1 ,null));
-        ProductData.addProduct(new Product(2, "bike", 1, 1, 1,1 ,null));
-        ProductData.addProduct(new Product(3, "truck", 1, 1, 1,1 ,null));
+        Inventory.ProductData.addProduct(new Product(1, "car", 1, 1, 1,1 ,null));
+        Inventory.ProductData.addProduct(new Product(2, "bike", 1, 1, 1,1 ,null));
+        Inventory.ProductData.addProduct(new Product(3, "truck", 1, 1, 1,1 ,null));
         launch(args);
     }
 }

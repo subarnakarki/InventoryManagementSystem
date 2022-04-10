@@ -1,11 +1,10 @@
 package controller;
 
-import model.Helper;
+import model.Inventory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import model.PartData;
 import model.InHousePart;
 import model.OutsourcedPart;
 import model.Part;
@@ -126,7 +125,7 @@ public class ModifyPartController implements Initializable {
         this.machineIdOrCompanyTxt = machineIdOrCompanyTxt;
     }
 
-    Helper helper = new Helper();
+    Inventory inventory = new Inventory();
 
     public void onActionShowOutsourced(ActionEvent actionEvent) {
         machineIdOrCompanyLabel.setText("Company Name");
@@ -162,17 +161,17 @@ public class ModifyPartController implements Initializable {
             } else {
                 modifiedPart = new OutsourcedPart(id, name , price, stock, min, max,machineIdOrCompanyTxt.getText());
             }
-            PartData.modify(id, modifiedPart);
-            helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
+            Inventory.PartData.modify(id, modifiedPart);
+            inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
         } catch (NumberFormatException e) {
-            helper.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", "Invalid form data, please check all input");
+            inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", "Invalid form data, please check all input");
         } catch (Exception e) {
-            helper.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", e.getMessage());
+            inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", e.getMessage());
         }
     }
 
     public void onActionDisplayMainForm(ActionEvent actionEvent) throws IOException {
-        helper.navigateToScreen(actionEvent, "/view/MainForm.fxml");
+        inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
     public void sendPart(Part part) {
         idTxt.setText(String.valueOf(part.getId()));

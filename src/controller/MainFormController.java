@@ -37,44 +37,44 @@ public class MainFormController implements Initializable {
     private TableColumn productInventoryColumn;
     @FXML
     private TableColumn productPriceColumn;
-    Helper helper = new Helper();
+    Inventory inventory = new Inventory();
 
 
     public void onActionAddPart(ActionEvent actionEvent) throws IOException {
-        helper.navigateToScreen(actionEvent, "/view/AddPartForm.fxml");
+        inventory.navigateToScreen(actionEvent, "/view/AddPartForm.fxml");
     }
 
     public void onActionModifyPart(ActionEvent actionEvent) throws IOException {
         if(partsTableView.getSelectionModel().getSelectedIndex() > -1) {
-            helper.sendDataAndLoadPage(actionEvent, partsTableView, "/view/ModifyPartForm.fxml", "parts");
+            inventory.sendDataAndLoadPage(actionEvent, partsTableView, "/view/ModifyPartForm.fxml", "parts");
         } else {
-            helper.createAlert( Alert.AlertType.WARNING,"Part Not Selected", "Select part to modify");
+            inventory.createAlert( Alert.AlertType.WARNING,"Part Not Selected", "Select part to modify");
         }
     }
 
     public void onActionDeletePart(ActionEvent actionEvent) throws IOException {
         if(partsTableView.getSelectionModel().getSelectedIndex() > -1) {
             Part part = (Part) partsTableView.getSelectionModel().getSelectedItem();
-            boolean deletePart = helper.createAlert( Alert.AlertType.CONFIRMATION,"Delete Part Confirmation", "Are you sure you want to delete the " + part.getName() + "?");
+            boolean deletePart = inventory.createAlert( Alert.AlertType.CONFIRMATION,"Delete Part Confirmation", "Are you sure you want to delete the " + part.getName() + "?");
 
             if(deletePart == true) {
-                PartData.deletePart(part.getId());
+                Inventory.PartData.deletePart(part.getId());
                 System.out.println(part instanceof InHousePart ? "Inhouse part deleted" : "Outsourced Part deleted");
             }
         } else {
-            helper.createAlert( Alert.AlertType.WARNING,"Part Not Selected", "Select part to delete");
+            inventory.createAlert( Alert.AlertType.WARNING,"Part Not Selected", "Select part to delete");
         }
     }
 
     public void onActionAddProduct(ActionEvent actionEvent) throws IOException {
-        helper.navigateToScreen(actionEvent, "/view/AddProductForm.fxml");
+        inventory.navigateToScreen(actionEvent, "/view/AddProductForm.fxml");
     }
 
     public void onActionModifyProduct(ActionEvent actionEvent) throws IOException {
         if(productsTableView.getSelectionModel().getSelectedIndex() > -1) {
-            helper.sendDataAndLoadPage(actionEvent, productsTableView, "/view/ModifyProductForm.fxml", "products");
+            inventory.sendDataAndLoadPage(actionEvent, productsTableView, "/view/ModifyProductForm.fxml", "products");
         } else {
-            helper.createAlert( Alert.AlertType.WARNING,"Product Not Selected", "Select product to modify");
+            inventory.createAlert( Alert.AlertType.WARNING,"Product Not Selected", "Select product to modify");
         }
     }
 
@@ -84,14 +84,14 @@ public class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        partsTableView.setItems(PartData.getAllParts());
+        partsTableView.setItems(Inventory.PartData.getAllParts());
 
         partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        productsTableView.setItems(ProductData.getProducts());
+        productsTableView.setItems(Inventory.ProductData.getProducts());
         productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -101,14 +101,35 @@ public class MainFormController implements Initializable {
 
 
     public void onActionDeleteProduct(ActionEvent actionEvent) {
+        try {
+            Product selectedProduct = (Product) productsTableView.getSelectionModel().getSelectedItem();
+            boolean deleteProduct = inventory.createAlert( Alert.AlertType.CONFIRMATION,"Delete Part Confirmation", "Are you sure you want to delete the " + selectedProduct.getName() + "?");
+            boolean productHasAssociatedParts = true;
+            productHasAssociatedParts = selectedProduct.getAllAssociatedParts() != null && !selectedProduct.getAllAssociatedParts().isEmpty();
+            if(deleteProduct == true) {
+                if(!productHasAssociatedParts) {
+                    for(Product product : Inventory.ProductData.getProducts()) {
+                        if (product.getId() == selectedProduct.getId()) {
+                            Inventory.ProductData.getProducts().remove(product);
+                            break;
+                        }
+                    }
+                } else {
+                    inventory.createAlert(Alert.AlertType.ERROR, "Product Delete Failure", "Cannot delete a product that has associated parts");
+                }
+            }
+        } catch (NullPointerException error) {
+            inventory.createAlert(Alert.AlertType.WARNING, "Product Delete Failure", "Select a product to delete");
+        }
+
     }
     public void onActionSearchProduct(KeyEvent actionEvent) {
         String searchText = searchProductsTextField.getText();
-        ProductData.search(searchText, productsTableView);
+        Inventory.ProductData.search(searchText, productsTableView);
     }
 
     public void onActionSearchPart(KeyEvent actionEvent) {
         String searchText = searchPartsTextField.getText();
-        ProductData.search(searchText, partsTableView);
+        Inventory.ProductData.search(searchText, partsTableView);
     }
 }
