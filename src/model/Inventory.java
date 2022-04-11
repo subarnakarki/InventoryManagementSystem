@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Optional;
 
-
+/** This class contains all inventory data*/
 public class Inventory {
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
@@ -53,6 +53,7 @@ public class Inventory {
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();
             stage.setScene(new Scene((scene)));
+            stage.setTitle("Modify Part Form");
             stage.show();
         } else if (dataType == "products") {
             FXMLLoader loader = new FXMLLoader();
@@ -65,6 +66,7 @@ public class Inventory {
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();
             stage.setScene(new Scene((scene)));
+            stage.setTitle("Modify Product Form");
             stage.show();
         }
     }
@@ -106,7 +108,6 @@ public class Inventory {
 
         public static ObservableList<Part> filterPartsWithId(int id) {
             if (!(getFilteredParts().isEmpty())) {
-                // clear list
                 getFilteredParts().clear();
             }
             for (Part part : allParts) {
