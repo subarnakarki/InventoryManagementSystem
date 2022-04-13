@@ -89,6 +89,9 @@ public class AddProductController implements Initializable {
             if (min > max) {
                 throw new Exception("Min cannot be greater than max");
             }
+            if (stock > max) {
+                throw new Exception("Inventory cannot be greater than max");
+            }
             if (min > stock) {
                 throw new Exception("Inventory cannot be less than min");
             }
@@ -98,7 +101,7 @@ public class AddProductController implements Initializable {
             for (Part part : tempAssociatedParts) {
                 associatedParts.add(part);
             }
-            Inventory.ProductData.addProduct(new Product((int)(Inventory.generateProductId()), name, stock, price, max,min,associatedParts));
+            Inventory.addProduct(new Product((int)(Inventory.generateProductId()), name, stock, price, max,min,associatedParts));
             inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
         } catch(NumberFormatException error) {
             inventory.createAlert(Alert.AlertType.ERROR, "Invalid Input For Product", "Error: Please check all input for the product");

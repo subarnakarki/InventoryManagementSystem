@@ -90,7 +90,7 @@ public class MainFormController implements Initializable {
         partInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        productsTableView.setItems(Inventory.ProductData.getProducts());
+        productsTableView.setItems(Inventory.getProducts());
         productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInventoryColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -107,9 +107,9 @@ public class MainFormController implements Initializable {
             productHasAssociatedParts = selectedProduct.getAllAssociatedParts() != null && !selectedProduct.getAllAssociatedParts().isEmpty();
             if(deleteProduct == true) {
                 if(!productHasAssociatedParts) {
-                    for(Product product : Inventory.ProductData.getProducts()) {
+                    for(Product product : Inventory.getProducts()) {
                         if (product.getId() == selectedProduct.getId()) {
-                            Inventory.ProductData.getProducts().remove(product);
+                            Inventory.getProducts().remove(product);
                             break;
                         }
                     }
@@ -124,11 +124,11 @@ public class MainFormController implements Initializable {
     }
     public void onActionSearchProduct(KeyEvent actionEvent) {
         String searchText = searchProductsTextField.getText();
-        Inventory.search(searchText, productsTableView);
+        Inventory.searchProducts(searchText, productsTableView);
     }
 
     public void onActionSearchPart(KeyEvent actionEvent) {
         String searchText = searchPartsTextField.getText();
-        Inventory.ProductData.search(searchText, partsTableView);
+        Inventory.search(searchText, partsTableView);
     }
 }

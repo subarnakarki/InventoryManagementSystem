@@ -147,6 +147,9 @@ public class ModifyPartController implements Initializable {
             if (min > max) {
                 throw new Exception("Min cannot be greater than max");
             }
+            if (stock > max) {
+                throw new Exception("Inventory cannot be greater than max");
+            }
             if (min > stock) {
                 throw new Exception("Inventory cannot be less than min");
             }

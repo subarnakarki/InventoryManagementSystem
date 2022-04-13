@@ -62,7 +62,7 @@ public class ModifyProductController implements Initializable {
             int selectedPartID = selectedPart.getId();
             boolean partAlreadyAdded = false;
             int currentPartID = Integer.parseInt(idTxt.getText());
-            ObservableList<Part> partsOnProduct = Inventory.ProductData.getAssociatedPartsForProduct(currentPartID);
+            ObservableList<Part> partsOnProduct = Inventory.getAssociatedPartsForProduct(currentPartID);
             if (partsOnProduct != null) {
                 for (Part part : partsOnProduct) {
                     if(!tempAssociatedParts.contains(part)) {
@@ -118,7 +118,7 @@ public class ModifyProductController implements Initializable {
         int min = Integer.parseInt(minTxt.getText());
         int max = Integer.parseInt(maxTxt.getText());
         int id = Integer.parseInt(idTxt.getText());
-        Inventory.ProductData.modify(id, new Product(id, name, stock, price, max,min,tempAssociatedParts));
+        Inventory.modify(id, new Product(id, name, stock, price, max,min,tempAssociatedParts));
         inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
 

@@ -21,8 +21,10 @@ import java.util.Optional;
 public class Inventory {
     private static ObservableList<Part> allParts = FXCollections.observableArrayList();
     private static ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    private static ObservableList<Product> filteredProducts = FXCollections.observableArrayList();
     private static int partId = 0;
     private static int productId = 0;
+
     public static int generateProductId() {
         productId = productId + 1;
         return productId;
@@ -198,87 +200,79 @@ public class Inventory {
         }
 
 
-    public static class ProductData {
-        private static ObservableList<Product> products = FXCollections.observableArrayList();
-        private static ObservableList<Product> filteredProducts = FXCollections.observableArrayList();
+    public static ObservableList<Product> getProducts() {
+        return allProducts;
+    }
 
-        public static ObservableList<Product> getProducts() {
-            return products;
-        }
+    public static void addProduct(Product product) {
+        allProducts.add(product);
+    }
 
-        public static void setProducts(ObservableList<Product> products) {
-            ProductData.products = products;
+    public static boolean modify(int id, Product modifiedProduct) {
+        int index = 0;
+        for(Product product : getProducts()) {
+            if(product.getId() == id) {
+                getProducts().set(index, modifiedProduct);
+                return true;
+            }
+            index++;
         }
+        return false;
+    }
 
-        public static void addProduct(Product product) {
-            products.add(product);
+    public static ObservableList<Part> getAssociatedPartsForProduct(int id) {
+        for(Product product : getProducts()) {
+            if(product.getId() == id) {
+                return product.getAllAssociatedParts();
+            }
         }
+        return null;
+    }
 
-        public static boolean modify(int id, Product modifiedProduct) {
-            int index = 0;
-            for(Product product : ProductData.getProducts()) {
-                if(product.getId() == id) {
-                    ProductData.getProducts().set(index, modifiedProduct);
-                    return true;
-                }
-                index++;
-            }
-            return false;
-        }
+    public static  ObservableList<Product> getFilteredProducts() {
+        return filteredProducts;
+    }
 
-        public static ObservableList<Part> getAssociatedPartsForProduct(int id) {
-            for(Product product : ProductData.getProducts()) {
-                if(product.getId() == id) {
-                    return product.getAllAssociatedParts();
-                }
-            }
-            return null;
+    public static ObservableList<Product> filterProductsWithText(String searchText) {
+        if (!(getFilteredProducts().isEmpty())) {
+            // clear list
+            getFilteredProducts().clear();
         }
-
-        public static  ObservableList<Product> getFilteredProducts() {
-            return filteredProducts;
-        }
-
-        public static ObservableList<Product> filterProductsWithText(String searchText) {
-            if (!(getFilteredProducts().isEmpty())) {
-                // clear list
-                getFilteredProducts().clear();
-            }
-            for (Product product : getProducts()) {
-                if(product.getName().contains(searchText)) {
-                    getFilteredProducts().add(product);
-                }
-            }
-            if (getFilteredProducts().isEmpty()) {
-                return getProducts();
-            } else {
-                return getFilteredProducts();
+        for (Product product : getProducts()) {
+            if(product.getName().contains(searchText)) {
+                getFilteredProducts().add(product);
             }
         }
-        public static ObservableList<Product> filterProductsWithId(int id) {
-            if (!(getFilteredProducts().isEmpty())) {
-                getFilteredProducts().clear();
-            }
-            for (Product product : getProducts()) {
-                if(product.getId() == id) {
-                    getFilteredProducts().add(product);
-                }
-            }
-            if (getFilteredProducts().isEmpty()) {
-                return getProducts();
-            } else {
-                return getFilteredProducts();
-            }
-        }
-        public static void search(String searchText, TableView tableView) {
-            try {
-                int id = Integer.parseInt(searchText);
-                tableView.setItems(filterProductsWithId(id));
-                tableView.setItems(getFilteredProducts());
-            } catch (NumberFormatException error) {
-                tableView.setItems(filterProductsWithText(searchText));
-                tableView.setItems(getFilteredProducts());
-            }
+        if (getFilteredProducts().isEmpty()) {
+            return getProducts();
+        } else {
+            return getFilteredProducts();
         }
     }
+    public static ObservableList<Product> filterProductsWithId(int id) {
+        if (!(getFilteredProducts().isEmpty())) {
+            getFilteredProducts().clear();
+        }
+        for (Product product : getProducts()) {
+            if(product.getId() == id) {
+                getFilteredProducts().add(product);
+            }
+        }
+        if (getFilteredProducts().isEmpty()) {
+            return getProducts();
+        } else {
+            return getFilteredProducts();
+        }
+    }
+    public static void searchProducts(String searchText, TableView tableView) {
+        try {
+            int id = Integer.parseInt(searchText);
+            tableView.setItems(filterProductsWithId(id));
+            tableView.setItems(getFilteredProducts());
+        } catch (NumberFormatException error) {
+            tableView.setItems(filterProductsWithText(searchText));
+            tableView.setItems(getFilteredProducts());
+        }
+    }
+
 }
