@@ -1,5 +1,5 @@
 package model;
-
+/** This class is used to create parts that are inhouse*/
 public class InHouse extends Part {
     private int machineId;
 

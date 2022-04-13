@@ -160,7 +160,7 @@ public class ModifyPartController implements Initializable {
             } else {
                 modifiedPart = new Outsourced(id, name , price, stock, min, max,machineIdOrCompanyTxt.getText());
             }
-            Inventory.PartData.modify(id, modifiedPart);
+            Inventory.modify(id, modifiedPart);
             inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
         } catch (NumberFormatException e) {
             inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", "Invalid form data, please check all input");

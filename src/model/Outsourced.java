@@ -1,5 +1,5 @@
 package model;
-
+/** This class is used to create parts that are outsourced*/
 public class Outsourced extends Part {
     private String companyName;
 

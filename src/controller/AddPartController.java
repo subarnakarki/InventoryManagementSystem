@@ -73,7 +73,7 @@ public class AddPartController implements Initializable {
             } else {
                 newPart = new Outsourced(Inventory.generatePartId(), name , price, stock, min, max,machineIdOrCompanyTxt.getText());
             }
-            Inventory.PartData.addPart(newPart);
+            Inventory.addPart(newPart);
             inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
         } catch (NumberFormatException e) {
                 inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", "Invalid form data, please check all input");

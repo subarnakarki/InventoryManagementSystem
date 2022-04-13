@@ -18,10 +18,10 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        Inventory.PartData.addPart(new InHouse(Inventory.generatePartId(), "brakes", 12.99, 10, 1, 10, 16541));
-        Inventory.PartData.addPart(new InHouse(Inventory.generatePartId(), "wheel", 12.99, 16, 1, 10, 651));
-        Inventory.PartData.addPart(new InHouse(Inventory.generatePartId(), "seat", 12.99, 10, 1, 10, 6511));
-        Inventory.PartData.addPart(new Outsourced(Inventory.generatePartId(), "door", 45.99, 10, 1, 10, "company one"));
+        Inventory.addPart(new InHouse(Inventory.generatePartId(), "brakes", 12.99, 10, 1, 10, 16541));
+        Inventory.addPart(new InHouse(Inventory.generatePartId(), "wheel", 12.99, 16, 1, 10, 651));
+        Inventory.addPart(new InHouse(Inventory.generatePartId(), "seat", 12.99, 10, 1, 10, 6511));
+        Inventory.addPart(new Outsourced(Inventory.generatePartId(), "door", 45.99, 10, 1, 10, "company one"));
 
         Inventory.ProductData.addProduct(new Product(Inventory.generateProductId(), "car", 1, 1, 1,1 ,null));
         Inventory.ProductData.addProduct(new Product(Inventory.generateProductId(), "bike", 1, 1, 1,1 ,null));

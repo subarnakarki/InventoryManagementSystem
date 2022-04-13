@@ -27,20 +27,45 @@ public class Inventory {
         productId = productId + 1;
         return productId;
     }
-
+    /** This method generates navigates to a new screen based on the path that is passed in.
+     * @param path the path to the screen
+     * @param actionEvent the action even object which triggers the navigation
+     */
     public void navigateToScreen(ActionEvent actionEvent, String path) throws IOException {
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         Object scene = FXMLLoader.load(getClass().getResource(path));
         stage.setScene(new Scene((Parent) scene));
-        stage.setTitle(path.substring(path.lastIndexOf("/" ) + 1, ( path.lastIndexOf("." ))));
+        stage.setTitle(splitCamelCase(path.substring(path.lastIndexOf("/" ) + 1, ( path.lastIndexOf("." )))));
         stage.show();
     }
 
+    /** This method generates a part id
+     * @return returns a new unique ID for a part
+     */
     public static int generatePartId() {
         partId = partId + 1;
         return partId;
     }
-
+    /** This method replaces camel cased text with a space. Used to help set titles for all forms
+     @param s The string to split
+     @return returns a string that has camelcase split with a space
+     */
+    public static String splitCamelCase(String s) {
+        return s.replaceAll(
+                String.format("%s|%s|%s",
+                        "(?<=[A-Z])(?=[A-Z][a-z])",
+                        "(?<=[^A-Z])(?=[A-Z])",
+                        "(?<=[A-Za-z])(?=[^A-Za-z])"
+                ),
+                " "
+        );
+    }
+    /** This method is used to send data from one controller to another and then load the new page
+     * @param actionEvent the action even object which triggers the navigation
+     * @param tableView the table view to get the selected part or product
+     * @param path the path to the new page
+     * @param dataType the type of data to load, either "parts" or "products"
+     */
     public void sendDataAndLoadPage(ActionEvent actionEvent, TableView tableView, String path, String dataType) throws IOException {
         if (dataType == "parts") {
             FXMLLoader loader = new FXMLLoader();
@@ -70,6 +95,12 @@ public class Inventory {
             stage.show();
         }
     }
+    /** This method is used to send data from one controller to another and then load the new page
+     * @param alertType the alertType that should be displayed
+     * @param title the title of the alert
+     * @param context the text to be displayed in the alert
+     * @return return true if the alert has a result and the user pressed OK, or else returns false
+     */
     public boolean createAlert(Alert.AlertType alertType, String title, String context) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -81,46 +112,44 @@ public class Inventory {
         return false;
     }
 
-
-    public static class PartData {
-//        private static ObservableList<Part> allParts = FXCollections.observableArrayList();
-        private static ObservableList<Part> filteredParts = FXCollections.observableArrayList();
-
-        public static void addPart(Part part) {
-            allParts.add(part);
-        }
-        public static boolean deletePart(int id) {
-            for(Part part : allParts) {
-                if(part.getId() == id) {
-                    return allParts.remove(part);
-                }
+    private static ObservableList<Part> filteredParts = FXCollections.observableArrayList();
+    public static void addPart(Part part) {
+        allParts.add(part);
+    }
+    public static boolean deletePart(int id) {
+        for(Part part : allParts) {
+            if(part.getId() == id) {
+                return allParts.remove(part);
             }
-            return false;
         }
+        return false;
+    }
 
-        public static  ObservableList<Part> getAllParts() {
+    public static  ObservableList<Part> getAllParts() {
+        return allParts;
+    }
+
+    public static  ObservableList<Part> getFilteredParts() {
+        return filteredParts;
+    }
+
+    public static ObservableList<Part> filterPartsWithId(int id) {
+        if (!(getFilteredParts().isEmpty())) {
+            getFilteredParts().clear();
+        }
+        for (Part part : allParts) {
+            if(part.getId() == id) {
+                getFilteredParts().add(part);
+            }
+        }
+        if (getFilteredParts().isEmpty()) {
+            System.out.println("empty");
             return allParts;
+        } else {
+            System.out.println("else");
+            return getFilteredParts();
         }
-
-        public static  ObservableList<Part> getFilteredParts() {
-            return filteredParts;
-        }
-
-        public static ObservableList<Part> filterPartsWithId(int id) {
-            if (!(getFilteredParts().isEmpty())) {
-                getFilteredParts().clear();
-            }
-            for (Part part : allParts) {
-                if(part.getId() == id) {
-                    getFilteredParts().add(part);
-                }
-            }
-            if (getFilteredParts().isEmpty()) {
-                return allParts;
-            } else {
-                return getFilteredParts();
-            }
-        }
+    }
 
         public static ObservableList<Part> filterPartsWithText(String searchText) {
             if (!(getFilteredParts().isEmpty())) {
@@ -133,18 +162,24 @@ public class Inventory {
                 }
             }
             if (getFilteredParts().isEmpty()) {
+                System.out.println("empty");
+
                 return allParts;
             } else {
+                System.out.println("else");
+
                 return getFilteredParts();
             }
         }
-
+        /** This method searches for a product*/
         public static void search(String searchText, TableView tableView) {
             try {
                 int id = Integer.parseInt(searchText);
                 tableView.setItems(filterPartsWithId(id));
                 tableView.setItems(getFilteredParts());
+                System.out.println("int");
             } catch (NumberFormatException error) {
+                System.out.println("txt");
                 tableView.setItems(filterPartsWithText(searchText));
                 tableView.setItems(getFilteredParts());
             }
@@ -161,7 +196,7 @@ public class Inventory {
             }
             return false;
         }
-    }
+
 
     public static class ProductData {
         private static ObservableList<Product> products = FXCollections.observableArrayList();
@@ -236,7 +271,6 @@ public class Inventory {
             }
         }
         public static void search(String searchText, TableView tableView) {
-            System.out.println(searchText);
             try {
                 int id = Integer.parseInt(searchText);
                 tableView.setItems(filterProductsWithId(id));

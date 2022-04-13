@@ -141,7 +141,7 @@ public class ModifyProductController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        allPartsTableView.setItems(Inventory.PartData.getAllParts());
+        allPartsTableView.setItems(Inventory.getAllParts());
         allPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         allPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         allPartsInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -156,6 +156,6 @@ public class ModifyProductController implements Initializable {
 
     public void onActionSearchPart(KeyEvent keyEvent) {
         String searchText = searchPartsTextField.getText();
-        Inventory.PartData.search(searchText, allPartsTableView);
+        Inventory.search(searchText, allPartsTableView);
     }
 }

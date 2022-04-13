@@ -86,6 +86,15 @@ public class AddProductController implements Initializable {
             int min = Integer.parseInt(minTxt.getText());
             int max = Integer.parseInt(maxTxt.getText());
             ObservableList<Part> associatedParts = FXCollections.observableArrayList();
+            if (min > max) {
+                throw new Exception("Min cannot be greater than max");
+            }
+            if (min > stock) {
+                throw new Exception("Inventory cannot be less than min");
+            }
+            if (min < 0 || max < 0 || stock < 0 || price < 0) {
+                throw new Exception("Inv, Price, Min, and Max should all be 0 or greater");
+            }
             for (Part part : tempAssociatedParts) {
                 associatedParts.add(part);
             }
@@ -93,6 +102,8 @@ public class AddProductController implements Initializable {
             inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
         } catch(NumberFormatException error) {
             inventory.createAlert(Alert.AlertType.ERROR, "Invalid Input For Product", "Error: Please check all input for the product");
+        } catch (Exception e) {
+            inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", e.getMessage());
         }
     }
 
@@ -101,7 +112,7 @@ public class AddProductController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        allPartsTableView.setItems(Inventory.PartData.getAllParts());
+        allPartsTableView.setItems(Inventory.getAllParts());
         allPartsIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         allPartsNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         allPartsInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -127,6 +138,6 @@ public class AddProductController implements Initializable {
 
     public void onActionSearchPart(KeyEvent keyEvent) {
         String searchText = searchPartsTextField.getText();
-        Inventory.PartData.search(searchText, allPartsTableView);
+        Inventory.search(searchText, allPartsTableView);
     }
 }

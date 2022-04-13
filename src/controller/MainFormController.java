@@ -58,7 +58,7 @@ public class MainFormController implements Initializable {
             boolean deletePart = inventory.createAlert( Alert.AlertType.CONFIRMATION,"Delete Part Confirmation", "Are you sure you want to delete the " + part.getName() + "?");
 
             if(deletePart == true) {
-                Inventory.PartData.deletePart(part.getId());
+                Inventory.deletePart(part.getId());
                 System.out.println(part instanceof InHouse ? "Inhouse part deleted" : "Outsourced Part deleted");
             }
         } else {
@@ -84,7 +84,7 @@ public class MainFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        partsTableView.setItems(Inventory.PartData.getAllParts());
+        partsTableView.setItems(Inventory.getAllParts());
         partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -124,7 +124,7 @@ public class MainFormController implements Initializable {
     }
     public void onActionSearchProduct(KeyEvent actionEvent) {
         String searchText = searchProductsTextField.getText();
-        Inventory.ProductData.search(searchText, productsTableView);
+        Inventory.search(searchText, productsTableView);
     }
 
     public void onActionSearchPart(KeyEvent actionEvent) {
