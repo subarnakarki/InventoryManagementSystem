@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/** This class is this controller for the modify part page*/
 public class ModifyPartController implements Initializable {
     @FXML
     private ToggleGroup modifyPartToggleGroup;
@@ -36,27 +37,39 @@ public class ModifyPartController implements Initializable {
     private Label machineIdOrCompanyLabel;
     @FXML
     private TextField machineIdOrCompanyTxt;
-
+    /**
+     * @return the modify toggle group
+     */
     public ToggleGroup getModifyPartToggleGroup() {
         return modifyPartToggleGroup;
     }
-
+    /**
+     * @param modifyPartToggleGroup the modify toggle group
+     */
     public void setModifyPartToggleGroup(ToggleGroup modifyPartToggleGroup) {
         this.modifyPartToggleGroup = modifyPartToggleGroup;
     }
-
+    /**
+     * @return the inhouse radio button
+     */
     public RadioButton getInHouseRBtn() {
         return inHouseRBtn;
     }
-
+    /**
+     * @param inHouseRBtn the inhouse radio button
+     */
     public void setInHouseRBtn(RadioButton inHouseRBtn) {
         this.inHouseRBtn = inHouseRBtn;
     }
-
+    /**
+     * @return the outsourced radio button
+     */
     public RadioButton getOutsourcedRBtn() {
         return outsourcedRBtn;
     }
-
+    /**
+     * @param outsourcedRBtn the outsourced radio button
+     */
     public void setOutsourcedRBtn(RadioButton outsourcedRBtn) {
         this.outsourcedRBtn = outsourcedRBtn;
     }
@@ -194,6 +207,11 @@ public class ModifyPartController implements Initializable {
             machineIdOrCompanyLabel.setText("Company Name");
         }
     }
+
+    /** This method is called when the page loads
+     * @param url the url
+     * @param resourceBundle the resource bundle
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         idTxt.setEditable(false);

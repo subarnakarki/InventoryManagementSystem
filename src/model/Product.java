@@ -57,23 +57,33 @@ public class Product {
     public int getId() {
         return id;
     }
-
+    /**
+     * @return the name
+     */
     public String getName() {
         return name;
     }
-
+    /**
+     * @return the stock
+     */
     public int getStock() {
         return stock;
     }
-
+    /**
+     * @return the price
+     */
     public double getPrice() {
         return price;
     }
-
+    /**
+     * @return the max
+     */
     public int getMax() {
         return max;
     }
-
+    /**
+     * @return the min
+     */
     public int getMin() {
         return min;
     }

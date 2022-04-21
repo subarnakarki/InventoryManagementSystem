@@ -2,22 +2,23 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/** This class is this controller for the add product page*/
 public class AddProductController implements Initializable {
+    @FXML
+    public Label searchPartsLabel;
+    @FXML
     public TextField searchPartsTextField;
     @FXML
     private TextField idTxt;
@@ -53,6 +54,9 @@ public class AddProductController implements Initializable {
     private TableColumn addedPartsPriceColumn;
     private static ObservableList<Part> tempAssociatedParts = FXCollections.observableArrayList();
     Inventory inventory = new Inventory();
+    /** This method triggers when the add button is clicked
+     * @param actionEvent the action event
+     * */
     public void onActionAdd(ActionEvent actionEvent) {
         if(allPartsTableView.getSelectionModel().getSelectedIndex() > -1) {
             Part selectedPart = (Part) allPartsTableView.getSelectionModel().getSelectedItem();
@@ -75,9 +79,9 @@ public class AddProductController implements Initializable {
         }
     }
 
-    public void onActionRemoveAssociatedProduct(ActionEvent actionEvent) {
-    }
-
+    /** This method triggers when the  save button is clicked
+     * @param actionEvent the action event
+     * */
     public void onActionSaveProduct(ActionEvent actionEvent) throws IOException {
         try {
             String name = nameTxt.getText();
@@ -109,10 +113,17 @@ public class AddProductController implements Initializable {
             inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", e.getMessage());
         }
     }
-
+    /** This method triggers when the cancele button is clicked
+     * @param actionEvent the action event
+     * */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
         inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
+
+    /** This method is called when the page loads
+     * @param url the url
+     * @param resourceBundle the resource bundle
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         allPartsTableView.setItems(Inventory.getAllParts());
@@ -127,7 +138,9 @@ public class AddProductController implements Initializable {
         addedPartsInventorColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         addedPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
-
+    /** This method triggers when the remove button is clicked
+     * @param actionEvent the action event
+     * */
     public void onActionRemoveAssociatedPart(ActionEvent actionEvent) {
         if (addedPartsTableView.getSelectionModel().getSelectedIndex() > -1) {
             Part part = (Part) addedPartsTableView.getSelectionModel().getSelectedItem();
@@ -138,9 +151,11 @@ public class AddProductController implements Initializable {
             inventory.createAlert(Alert.AlertType.WARNING, "No Part Selected", "There are no parts selected to remove");
         }
     }
-
+    /** This method triggers when the text field has new text
+     * @param keyEvent the key event
+     * */
     public void onActionSearchPart(KeyEvent keyEvent) {
         String searchText = searchPartsTextField.getText();
-        Inventory.search(searchText, allPartsTableView);
+        Inventory.search(searchText, allPartsTableView, searchPartsLabel);
     }
 }

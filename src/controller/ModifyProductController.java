@@ -2,22 +2,22 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+/** This class is this controller for the modify product page*/
 public class ModifyProductController implements Initializable {
+    @FXML
+    public Label searchPartsLabel;
+    @FXML
     public TextField searchPartsTextField;
     @FXML
     private TextField idTxt;
@@ -71,7 +71,6 @@ public class ModifyProductController implements Initializable {
                 }
             }
             if (tempAssociatedParts.size() == 0 && partsOnProduct == null ) {
-                System.out.println("associatedParts size is zero:");
                 tempAssociatedParts= FXCollections.observableArrayList();
                 tempAssociatedParts.add(selectedPart);
             } else {
@@ -84,7 +83,6 @@ public class ModifyProductController implements Initializable {
                     tempAssociatedParts.add(selectedPart);
                 } else {
                     inventory.createAlert( Alert.AlertType.WARNING,"Part Already Added", "Part already added, please select another part");
-                    System.out.println("Part already added!");
                 }
             }
             addedPartsTableView.setItems(tempAssociatedParts);
@@ -98,8 +96,6 @@ public class ModifyProductController implements Initializable {
         if (addedPartsTableView.getSelectionModel().getSelectedIndex() > -1) {
             Part partToRemove = (Part) addedPartsTableView.getSelectionModel().getSelectedItem();
                 for(Part part : tempAssociatedParts) {
-                System.out.println(part.getId());
-                System.out.println(partToRemove.getId());
                 if(partToRemove.getId() == part.getId()) {
                     tempAssociatedParts.remove(partToRemove);
                     break;
@@ -139,6 +135,11 @@ public class ModifyProductController implements Initializable {
             }
         }
     }
+
+    /** This method is called when the page loads
+     * @param url the url
+     * @param resourceBundle the resource bundle
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         allPartsTableView.setItems(Inventory.getAllParts());
@@ -156,6 +157,6 @@ public class ModifyProductController implements Initializable {
 
     public void onActionSearchPart(KeyEvent keyEvent) {
         String searchText = searchPartsTextField.getText();
-        Inventory.search(searchText, allPartsTableView);
+        Inventory.search(searchText, allPartsTableView, searchPartsLabel);
     }
 }

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/** This class is this controller for the add part page*/
 public class AddPartController implements Initializable {
     @FXML
     public ToggleGroup addPartToggleGroup;
@@ -48,7 +49,9 @@ public class AddPartController implements Initializable {
     public TextField machineIdOrCompanyTxt;
 
     Inventory inventory = new Inventory();
-
+    /** This method triggers when the save button is clicked
+     * @param actionEvent the event
+     * */
     public void onActionSavePart(ActionEvent actionEvent) throws IOException {
         try {
             boolean partIsInhouse = inHouseRBtn.isSelected() ? true : false;
@@ -84,20 +87,29 @@ public class AddPartController implements Initializable {
             inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", e.getMessage());
         }
     }
-
+    /** This method triggers when the cancel button is clicked
+     * @param actionEvent the event
+     * */
     public void onActionDisplayMainForm(ActionEvent actionEvent) throws IOException {
         inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
-
+    /** This method triggers when the outsourced radio button is clicked
+     * @param actionEvent the event
+     * */
     public void onActionShowOutsourced(ActionEvent actionEvent) {
         machineIdOrCompanyLabel.setText("Company Name");
     }
-
+    /** This method triggers when the inhouse radio button is clicked
+     * @param actionEvent the event
+     * */
     public void onActionShowInhouse(ActionEvent actionEvent) {
         machineIdOrCompanyLabel.setText("Machine ID");
     }
 
-
+    /** This method is called when the page loads
+     * @param url the url
+     * @param resourceBundle the resource bundle
+     * */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         idTxt.setEditable(false);
