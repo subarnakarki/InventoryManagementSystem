@@ -46,12 +46,14 @@ public class MainFormController implements Initializable {
 
     /** This method triggers when the add part button is clicked
      * @param actionEvent the action event
+     * @exception  IOException the io exception
      * */
     public void onActionAddPart(ActionEvent actionEvent) throws IOException {
         inventory.navigateToScreen(actionEvent, "/view/AddPartForm.fxml");
     }
     /** This method triggers when the modify part button is clicked
      * @param actionEvent the action event
+     * @exception  IOException the io exception
      * */
     public void onActionModifyPart(ActionEvent actionEvent) throws IOException {
         if(partsTableView.getSelectionModel().getSelectedIndex() > -1) {
@@ -62,6 +64,7 @@ public class MainFormController implements Initializable {
     }
     /** This method triggers when the delete part button is clicked
      * @param actionEvent the action event
+     * @exception  IOException the io exception
      * */
     public void onActionDeletePart(ActionEvent actionEvent) throws IOException {
         if(partsTableView.getSelectionModel().getSelectedIndex() > -1) {
@@ -76,12 +79,14 @@ public class MainFormController implements Initializable {
     }
     /** This method triggers when the add product button is clicked
      * @param actionEvent the action event
+     * @exception  IOException the io exception
      * */
     public void onActionAddProduct(ActionEvent actionEvent) throws IOException {
         inventory.navigateToScreen(actionEvent, "/view/AddProductForm.fxml");
     }
     /** This method triggers when the modify product button is clicked
      * @param actionEvent the action event
+     * @exception  IOException the io exception
      * */
     public void onActionModifyProduct(ActionEvent actionEvent) throws IOException {
         if(productsTableView.getSelectionModel().getSelectedIndex() > -1) {

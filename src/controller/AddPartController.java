@@ -51,6 +51,7 @@ public class AddPartController implements Initializable {
     Inventory inventory = new Inventory();
     /** This method triggers when the save button is clicked
      * @param actionEvent the event
+     * @exception  IOException the io exception
      * */
     public void onActionSavePart(ActionEvent actionEvent) throws IOException {
         try {
@@ -89,6 +90,7 @@ public class AddPartController implements Initializable {
     }
     /** This method triggers when the cancel button is clicked
      * @param actionEvent the event
+     * @exception  IOException the io exception
      * */
     public void onActionDisplayMainForm(ActionEvent actionEvent) throws IOException {
         inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");

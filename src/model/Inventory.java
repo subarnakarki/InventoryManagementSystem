@@ -1,6 +1,5 @@
 package model;
 
-import controller.MainFormController;
 import controller.ModifyPartController;
 import controller.ModifyProductController;
 import javafx.collections.FXCollections;
@@ -30,6 +29,7 @@ public class Inventory {
     /** This method generates navigates to a new screen based on the path that is passed in.
      * @param path the path to the screen
      * @param actionEvent the action even object which triggers the navigation
+     * @exception  IOException the io exception
      */
     public void navigateToScreen(ActionEvent actionEvent, String path) throws IOException {
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -65,6 +65,7 @@ public class Inventory {
      * @param tableView the table view to get the selected part or product
      * @param path the path to the new page
      * @param dataType the type of data to load, either "parts" or "products"
+     * @exception  IOException the io exception
      */
     public void sendDataAndLoadPage(ActionEvent actionEvent, TableView tableView, String path, String dataType) throws IOException {
         if (dataType == "parts") {
@@ -113,7 +114,9 @@ public class Inventory {
     }
 
     private static ObservableList<Part> filteredParts = FXCollections.observableArrayList();
-    /** This method adds a part to all parts */
+    /** This method adds a part to all parts
+     * @param part the part to add
+     * */
     public static void addPart(Part part) {
         allParts.add(part);
     }
@@ -183,6 +186,7 @@ public class Inventory {
     /** This method searches for a part
      * @param searchText text of the part to search
      * @param tableView the table view to search parts on
+     * @param label the label that needs to be modified
      * */
     public static void search(String searchText, TableView tableView, Label label) {
         try {
@@ -202,6 +206,7 @@ public class Inventory {
     /** This method searches for a product
      * @param id the id of the part to modify
      * @param modifiedPart the part to modify
+     * @return boolean, true if successful and false if not successful
      * */
     public static boolean modify(int id, Part modifiedPart) {
         int index = 0;
@@ -221,7 +226,9 @@ public class Inventory {
     public static ObservableList<Product> getProducts() {
         return allProducts;
     }
-    /** This method adds a product to all parts */
+    /** This method adds a product to all parts
+     * @param product the product to add
+     * */
     public static void addProduct(Product product) {
         allProducts.add(product);
     }
@@ -301,6 +308,7 @@ public class Inventory {
     /** This method searches for a product
      * @param searchText text of the part to search
      * @param tableView the table view to search parts on
+     * @param label the label that needs to be modified
      * */
     public static void searchProducts(String searchText, TableView tableView, Label label ) {
         try {

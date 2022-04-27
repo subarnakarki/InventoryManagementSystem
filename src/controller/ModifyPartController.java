@@ -152,7 +152,7 @@ public class ModifyPartController implements Initializable {
         return machineIdOrCompanyLabel;
     }
     /**
-     * @param outsourcedRBtn the inventory text field
+     * @param machineIdOrCompanyLabel the machine id or company label
      */
     public void setMachineIdOrCompanyLabel(Label machineIdOrCompanyLabel) {
         this.machineIdOrCompanyLabel = machineIdOrCompanyLabel;
@@ -185,6 +185,7 @@ public class ModifyPartController implements Initializable {
     }
     /** saves the part
      * @param actionEvent the action event
+     * @exception  IOException the io exception
      */
     public void onActionSavePart(ActionEvent actionEvent) throws IOException {
         try {
@@ -224,6 +225,7 @@ public class ModifyPartController implements Initializable {
     }
     /** displays the main form
      * @param actionEvent the action event
+     * @throws IOException handles io exception
      */
     public void onActionDisplayMainForm(ActionEvent actionEvent) throws IOException {
         inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");

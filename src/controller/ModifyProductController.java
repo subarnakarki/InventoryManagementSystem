@@ -112,6 +112,7 @@ public class ModifyProductController implements Initializable {
     }
     /** This method triggers when the  save button is clicked
      * @param actionEvent the action event
+     * @exception  IOException the io exception
      * */
     public void onActionSaveProduct(ActionEvent actionEvent) throws IOException {
         String name = nameTxt.getText();
@@ -125,6 +126,7 @@ public class ModifyProductController implements Initializable {
     }
     /** This method triggers when the cancel button is clicked
      * @param actionEvent the action event
+     * @exception  IOException the io exception
      * */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
         inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");

@@ -81,6 +81,7 @@ public class AddProductController implements Initializable {
 
     /** This method triggers when the  save button is clicked
      * @param actionEvent the action event
+     * @exception  IOException the io exception
      * */
     public void onActionSaveProduct(ActionEvent actionEvent) throws IOException {
         try {
@@ -113,8 +114,9 @@ public class AddProductController implements Initializable {
             inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", e.getMessage());
         }
     }
-    /** This method triggers when the cancele button is clicked
+    /** This method triggers when the cancel button is clicked
      * @param actionEvent the action event
+     * @exception  IOException the io exception
      * */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
         inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
