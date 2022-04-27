@@ -16,37 +16,37 @@ import java.util.ResourceBundle;
 /** This class is this controller for the add part page*/
 public class AddPartController implements Initializable {
     @FXML
-    public ToggleGroup addPartToggleGroup;
+    private ToggleGroup addPartToggleGroup;
 
     @FXML
-    public RadioButton inHouseRBtn;
+    private RadioButton inHouseRBtn;
 
     @FXML
-    public RadioButton outsourcedRBtn;
+    private RadioButton outsourcedRBtn;
 
     @FXML
-    public TextField idTxt;
+    private TextField idTxt;
 
     @FXML
-    public TextField nameTxt;
+    private TextField nameTxt;
 
     @FXML
-    public TextField stockTxt;
+    private TextField stockTxt;
 
     @FXML
-    public TextField priceCostTxt;
+    private TextField priceCostTxt;
 
     @FXML
-    public TextField maxTxt;
+    private TextField maxTxt;
 
     @FXML
-    public TextField minTxt;
+    private TextField minTxt;
 
     @FXML
-    public Label machineIdOrCompanyLabel;
+    private Label machineIdOrCompanyLabel;
 
     @FXML
-    public TextField machineIdOrCompanyTxt;
+    private TextField machineIdOrCompanyTxt;
 
     Inventory inventory = new Inventory();
     /** This method triggers when the save button is clicked

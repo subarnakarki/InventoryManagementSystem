@@ -222,12 +222,15 @@ public class ModifyPartController implements Initializable {
             inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", e.getMessage());
         }
     }
-    /** displays the main form`
+    /** displays the main form
      * @param actionEvent the action event
      */
     public void onActionDisplayMainForm(ActionEvent actionEvent) throws IOException {
         inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
+    /** sends part data from this controller to the main controller
+     * @param part the part to load from the main screen
+     */
     public void sendPart(Part part) {
         idTxt.setText(String.valueOf(part.getId()));
         nameTxt.setText(part.getName());

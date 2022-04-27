@@ -17,9 +17,9 @@ import java.util.ResourceBundle;
 /** This class is this controller for the add product page*/
 public class AddProductController implements Initializable {
     @FXML
-    public Label searchPartsLabel;
+    private Label searchPartsLabel;
     @FXML
-    public TextField searchPartsTextField;
+    private TextField searchPartsTextField;
     @FXML
     private TextField idTxt;
     @FXML

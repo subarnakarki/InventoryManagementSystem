@@ -54,8 +54,10 @@ public class ModifyProductController implements Initializable {
     private TableColumn addedPartsPriceColumn;
 
     private ObservableList<Part> tempAssociatedParts = FXCollections.observableArrayList();
-
     Inventory inventory = new Inventory();
+    /** This method triggers when the add button is clicked
+     * @param actionEvent the action event
+     * */
     public void onActionAdd(ActionEvent actionEvent) {
         if(allPartsTableView.getSelectionModel().getSelectedIndex() > -1) {
             Part selectedPart = (Part) allPartsTableView.getSelectionModel().getSelectedItem();
@@ -90,7 +92,9 @@ public class ModifyProductController implements Initializable {
             inventory.createAlert( Alert.AlertType.WARNING,"Select a part", "Select a part to add");
         }
     }
-
+    /** This method removed an associated part from the produc
+     * @param actionEvent the action event
+     * */
     public void onActionRemoveAssociatedPart(ActionEvent actionEvent) {
 
         if (addedPartsTableView.getSelectionModel().getSelectedIndex() > -1) {
@@ -106,7 +110,9 @@ public class ModifyProductController implements Initializable {
             inventory.createAlert(Alert.AlertType.WARNING, "No Part Selected", "There are no parts selected to remove");
         }
     }
-
+    /** This method triggers when the  save button is clicked
+     * @param actionEvent the action event
+     * */
     public void onActionSaveProduct(ActionEvent actionEvent) throws IOException {
         String name = nameTxt.getText();
         double price = Double.parseDouble(priceCostTxt.getText());
@@ -117,10 +123,15 @@ public class ModifyProductController implements Initializable {
         Inventory.modify(id, new Product(id, name, stock, price, max,min,tempAssociatedParts));
         inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
-
+    /** This method triggers when the cancel button is clicked
+     * @param actionEvent the action event
+     * */
     public void onActionCancel(ActionEvent actionEvent) throws IOException {
         inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
+    /** This method sends the product data from this controller to the main controller
+     * @param product the action event
+     * */
     public void sendProduct(Product product) {
         idTxt.setText(String.valueOf(product.getId()));
         nameTxt.setText(product.getName());
@@ -155,6 +166,9 @@ public class ModifyProductController implements Initializable {
         addedPartsPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
+    /** This method is called when you search a part
+     * @param keyEvent the key event
+     * */
     public void onActionSearchPart(KeyEvent keyEvent) {
         String searchText = searchPartsTextField.getText();
         Inventory.search(searchText, allPartsTableView, searchPartsLabel);

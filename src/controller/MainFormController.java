@@ -15,26 +15,9 @@ import java.util.ResourceBundle;
 /** This class is this controller for the main form page*/
 public class MainFormController implements Initializable {
     @FXML
-    public TableView productsTableView;
+    private TableView productsTableView;
     @FXML
-    public Label searchProductsLabel;
-
-    public Label getSearchProductsLabel() {
-        return searchProductsLabel;
-    }
-
-    public void setSearchProductsLabel(Label searchProductsLabel) {
-        this.searchProductsLabel = searchProductsLabel;
-    }
-
-    public Label getSearchPartsLabel() {
-        return searchPartsLabel;
-    }
-
-    public void setSearchPartsLabel(Label searchPartsLabel) {
-        this.searchPartsLabel = searchPartsLabel;
-    }
-
+    private Label searchProductsLabel;
     @FXML
     public Label searchPartsLabel;
     @FXML
