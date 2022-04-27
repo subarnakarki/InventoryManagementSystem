@@ -73,81 +73,119 @@ public class ModifyPartController implements Initializable {
     public void setOutsourcedRBtn(RadioButton outsourcedRBtn) {
         this.outsourcedRBtn = outsourcedRBtn;
     }
-
+    /**
+     * @return the id text
+     */
     public TextField getIdTxt() {
         return idTxt;
     }
-
+    /**
+     * @param idTxt the id text field
+     */
     public void setIdTxt(TextField idTxt) {
         this.idTxt = idTxt;
     }
-
+    /**
+     * @return the name text
+     */
     public TextField getNameTxt() {
         return nameTxt;
     }
-
+    /**
+     * @param nameTxt the name text field
+     */
     public void setNameTxt(TextField nameTxt) {
         this.nameTxt = nameTxt;
     }
-
+    /**
+     * @return the inventory text
+     */
     public TextField getInvTxt() {
         return invTxt;
     }
-
+    /**
+     * @param invTxt the inventory text field
+     */
     public void setInvTxt(TextField invTxt) {
         this.invTxt = invTxt;
     }
-
+    /**
+     * @return the price text
+     */
     public TextField getPriceCostTxt() {
         return priceCostTxt;
     }
-
+    /**
+     * @param priceCostTxt the price text field
+     */
     public void setPriceCostTxt(TextField priceCostTxt) {
         this.priceCostTxt = priceCostTxt;
     }
-
+    /**
+     * @return the max text
+     */
     public TextField getMaxTxt() {
         return maxTxt;
     }
-
+    /**
+     * @param maxTxt the max text field
+     */
     public void setMaxTxt(TextField maxTxt) {
         this.maxTxt = maxTxt;
     }
-
+    /**
+     * @return the min text
+     */
     public TextField getMinTxt() {
         return minTxt;
     }
-
+    /**
+     * @param minTxt the min text field
+     */
     public void setMinTxt(TextField minTxt) {
         this.minTxt = minTxt;
     }
-
+    /**
+     * @return the machine id or company label
+     */
     public Label getMachineIdOrCompanyLabel() {
         return machineIdOrCompanyLabel;
     }
-
+    /**
+     * @param outsourcedRBtn the inventory text field
+     */
     public void setMachineIdOrCompanyLabel(Label machineIdOrCompanyLabel) {
         this.machineIdOrCompanyLabel = machineIdOrCompanyLabel;
     }
-
+    /**
+     * @return the machine id or company text
+     */
     public TextField getMachineIdOrCompanyTxt() {
         return machineIdOrCompanyTxt;
     }
-
+    /**
+     * @param machineIdOrCompanyTxt the machine id or company text field
+     */
     public void setMachineIdOrCompanyTxt(TextField machineIdOrCompanyTxt) {
         this.machineIdOrCompanyTxt = machineIdOrCompanyTxt;
     }
 
     Inventory inventory = new Inventory();
-
+    /**
+     * @param actionEvent the action event
+     */
     public void onActionShowOutsourced(ActionEvent actionEvent) {
         machineIdOrCompanyLabel.setText("Company Name");
     }
-
+    /**
+     * @param actionEvent the action event
+     */
     public void onActionShowInhouse(ActionEvent actionEvent) {
         machineIdOrCompanyLabel.setText("Machine ID");
     }
-
+    /** saves the part
+     * @param actionEvent the action event
+     */
     public void onActionSavePart(ActionEvent actionEvent) throws IOException {
         try {
             boolean partIsInhouse = inHouseRBtn.isSelected() ? true : false;
@@ -184,7 +222,9 @@ public class ModifyPartController implements Initializable {
             inventory.createAlert(Alert.AlertType.ERROR, "Invalid Form Data", e.getMessage());
         }
     }
-
+    /** displays the main form`
+     * @param actionEvent the action event
+     */
     public void onActionDisplayMainForm(ActionEvent actionEvent) throws IOException {
         inventory.navigateToScreen(actionEvent, "/view/MainForm.fxml");
     }
